@@ -33,8 +33,45 @@
 		</nav>
 		<article class="content">
 			<section class="main-content">
-				<ul class="catalog" id="catalog">
-				    
+			     {% for page in (1..paginator.total_pages) %}
+			         {% if page == paginator.page %}
+					      <span class="active">{{ page }}</span>
+			         {% elsif page == 1 %}
+					      <a href="{{ '/index.html' | prepend: site.baseurl | replace: '//', '/' }}">{{ page }}</a>
+			         {% else %}
+					      <a href="{{ site.paginate_path | prepend: site.baseurl | replace: '//', '/' | replace: ':num', page }}">{{ page }}</a>
+			         {% endif %}
+			     {% endfor %}
+			     
+			     
+			     <!-- 分割线 -->
+			     
+			     {% if paginator.total_pages > 1 %}
+					<div class="pagination">
+					  {% if paginator.previous_page %}
+					    <a href="{{ paginator.previous_page_path | prepend: site.baseurl | replace: '//', '/' }}">&laquo; Prev</a>
+					  {% else %}
+					    <span>&laquo; Prev</span>
+					  {% endif %}
+					
+					  {% for page in (1..paginator.total_pages) %}
+					    {% if page == paginator.page %}
+					      <em>{{ page }}</em>
+					    {% elsif page == 1 %}
+					      <a href="{{ '/index.html' | prepend: site.baseurl | replace: '//', '/' }}">{{ page }}</a>
+					    {% else %}
+					      <a href="{{ site.paginate_path | prepend: site.baseurl | replace: '//', '/' | replace: ':num', page }}">{{ page }}</a>
+					    {% endif %}
+					  {% endfor %}
+					
+					  {% if paginator.next_page %}
+					    <a href="{{ paginator.next_page_path | prepend: site.baseurl | replace: '//', '/' }}">Next &raquo;</a>
+					  {% else %}
+					    <span>Next &raquo;</span>
+					  {% endif %}
+					</div>
+					{% endif %}
+				<!-- <ul class="catalog" id="catalog">
 				    <li class="catalog-seperator">2017</li>
 				    <li class="catalog-item">
                         <time datetime="2017-01-03">2017-01-03</time>
@@ -42,10 +79,10 @@
                     </li>
 				    
 					<li class="catalog-seperator">2016</li>
-					<!-- <li>
+					<li>
 					   <time datetime="2016-12-30">2016-12-30</time>
                        <a href="html/interview2.html" title="看别人的面试">看别人的面试</a>
-					</li> -->
+					</li>
 					<li class="catalog-item">
 						<time datetime="2016-12-27">2016-12-27</time>
 						<a href="html/interview.html" title="面试题总结">面试题总结</a>
@@ -63,7 +100,7 @@
 				<div class="paginator" id="paginator">
 					<a class="current-page">1</a>
 					(共<span id="countNum">3</span>篇)
-				</div>
+				</div> -->
 			</section>
 			<aside id="sidebar">
 				<h2><p>个人档案</p></h2>
@@ -79,8 +116,8 @@
 </div>
 <script type="text/javascript">
 window.onload=function(){
-	var count=document.getElementById("catalog").children.length-2;
-	document.getElementById("countNum").innerHTML=count;
+	//var count=document.getElementById("catalog").children.length-2;
+	//document.getElementById("countNum").innerHTML=count;
 }
 //初始化分页
 function initPage(){
