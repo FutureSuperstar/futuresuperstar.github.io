@@ -1,39 +1,94 @@
----
-layout: default
-title: Home
----
-
-<div class="home">
-
-  <ul class="posts">
-    {% for post in paginator.posts %}
-    <li>
-      <h1 >{{ post.title }}</h1>
-      <span>{{ post.date | date: "%b %-d, %Y" }}</span>
-      <p>{{ post.excerpt }}</p>
-      <div class="continue">
-        <a href="{{ post.url | prepend: site.baseurl }}">&bull;&bull;&bull;</a>
-      </div>
-    </li>
-    {% endfor %}
-  </ul>
-
-  <div class="pagination">
-    {% if paginator.previous_page %}
-      {% if page == 2 %}
-        <a class="page-link" href="{{ '/index.html' | prepend: site.baseurl | replace: '//', '/' | replace: ':num', page }}">prv</a>
-      {% else %}
-        <a class="page-link" href="{{ paginator.previous_page_path | prepend: site.baseurl | replace: '//', '/' }}">prv</a>
-      {% endif %}
-    {% else %}
-      <span class="page-link">prv</span>
-    {% endif %}
-
-    {% if paginator.next_page %}
-      <a class="page-link" href="{{ paginator.next_page_path | prepend: site.baseurl | replace: '//', '/' }}">nxt</a>
-    {% else %}
-      <span class="page-link">nxt</span>
-    {% endif %}
-  </div>
-
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset='utf-8'>
+<meta http-equiv="X-UA-Compatible" content="chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="author" content="xyan" />
+<meta name="keywords" content="个人博客,github博客,wangming,王明" />
+<meta name="description" content="王明在github上搭建个的个人博客" />
+<title>Blog by FutureSuperstar</title>
+<link rel="shortcut icon" type="image/x-icon" href="https://futuresuperstar.github.io/images/ico/18.ico" />
+<link href='https://fonts.googleapis.com/css?family=Galdeano' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Electrolize' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Cuprum' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="css/style.css" media="screen"/>
+<!--[if lt IE 9]>
+<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+</head>
+<body>
+<div class="container">
+	<div role="main">
+		<header>
+			<h1>FutureSuperstar</h1>
+		</header>
+		<nav>
+			<span><a title="首页"  href="https://futuresuperstar.github.io">首页</a></span> 
+			<span><a title="分类"  href="https://futuresuperstar.github.io/html/categories/index.html">分类</a></span> 
+			<span><a title="标签"  href="https://futuresuperstar.github.io/html/tags/index.html">标签</a></span> 
+			<span><a title="留言"  href="https://futuresuperstar.github.io/html/visit/index.html">留言</a></span> 
+			<span><a title="关于我" href="https://futuresuperstar.github.io/html/about/index.html">关于</a></span>
+		</nav>
+		<article class="content">
+			<section class="main-content">
+				<ul class="catalog" id="catalog">
+				    <li class="catalog-seperator">2017</li>
+				    <li class="catalog-item">
+                        <time datetime="2017-01-03">2017-01-03</time>
+                        <a href="html/negativepositivelock.html" title="悲观锁和乐观锁">悲观锁和乐观锁</a>
+                    </li>
+				    
+					<li class="catalog-seperator">2016</li>
+					<li class="catalog-item">
+						<time datetime="2016-12-27">2016-12-27</time>
+						<a href="html/interview.html" title="面试题总结">面试题总结</a>
+					</li>
+					<li class="catalog-item">
+						<time datetime="2016-12-23">2016-12-23</time>
+						<a href="html/identifyingCode.html" title="验证码的新思路">验证码的新思路</a>
+					</li>
+					<li class="catalog-item">
+						<time datetime="2016-12-23">2016-12-20</time>
+						<a href="html/springboot/problems.html" title="springboot的几个问题">springboot的几个问题</a>
+						<small class="status-tag reprint">转</small>
+					</li>
+				</ul>
+				<div class="paginator" id="paginator">
+					<a class="current-page">1</a>
+					(共<span id="countNum">3</span>篇)
+				</div>
+			</section>
+			<aside id="sidebar">
+				<h2><p>个人档案</p></h2>
+				<p class="fn">姓名：王明</p>
+				<p class="nickname">网名：xyan | 淡泊</p>
+				<p>邮箱：<a style="color:#2879d0" href="mailto:wangming1255@aliyun.com">wangming1255@aliyun.com</a></p>
+				<p>QQ：543095204</p>
+				<p class="address">现居：上海市&mdash;虹口区</p>
+				<p class="role">职业：网站设计、网站制作</p>
+			</aside>
+		</article>
+	</div>
 </div>
+<script type="text/javascript">
+window.onload=function(){
+	var count=document.getElementById("catalog").children.length-2;
+	document.getElementById("countNum").innerHTML=count;
+}
+//初始化分页
+function initPage(){
+	var paginator=document.getElementById("paginator"),
+	   pages=paginator.children;
+	var currentPage=null;
+	for(var i=0;i<pages.length;i++){
+		if(pages[i].className.indexOf("current-page")>-1){
+			currentPage=pages[i];
+			break;
+		}
+	}
+}
+</script>
+</body>
+</html>
