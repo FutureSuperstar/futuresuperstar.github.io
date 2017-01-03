@@ -17,7 +17,7 @@ var duoshuoQuery = {
 var _hmt = _hmt || [];
 (function() {
   var hm = document.createElement("script");
-  hm.src = "https://hm.baidu.com/hm.js?5a5aa4c15aa7769720a3abd010b0e21b";
+  hm.src = "https://hm.baidu.com/hm.js?928e7dca1bcf84b4f8a04cf3f0944b93";
   var s = document.getElementsByTagName("script")[0]; 
   s.parentNode.insertBefore(hm, s);
 })();
