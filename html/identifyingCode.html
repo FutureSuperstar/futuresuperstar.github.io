@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset='utf-8'>
+<meta http-equiv="X-UA-Compatible" content="chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="author" content="xyan" />
+<meta name="keywords" content="个人博客,github博客,wangming,王明" />
+<meta name="description" content="王明在github上搭建个的个人博客" />
+<title>验证码的新思路--Blog by FutureSuperstar</title>
+<link rel="shortcut icon" type="image/x-icon" href="https://futuresuperstar.github.io/blog/images/ico/18.ico" />
+<link href='https://fonts.googleapis.com/css?family=Galdeano' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Electrolize' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Cuprum' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="../css/style.css" media="screen"/>
+<!--[if lt IE 9]>
+<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+<style type="text/css">
+.main-content p{text-indent: 2em;}
+</style>
+</head>
+<body>
+<div class="container">
+	<div role="main">
+		<header>
+			<h1>验证码的新思路</h1>
+		</header>
+		<nav>
+			<span><a title="首页"  href="https://futuresuperstar.github.io/blog">首页</a></span> 
+			<span><a title="分类"  href="https://futuresuperstar.github.io/blog/html/categories/index.html">分类</a></span> 
+			<span><a title="标签"  href="https://futuresuperstar.github.io/blog/html/tags/index.html">标签</a></span> 
+			<span><a title="留言"  href="https://futuresuperstar.github.io/blog/html/visit/index.html">留言</a></span> 
+			<span><a title="关于我" href="https://futuresuperstar.github.io/blog/html/about/index.html">关于</a></span>
+		</nav>
+		<article class="content">
+			<section class="meta">
+				<span class="time">
+					<time datetime="2016-12-23">2016-12-23</time>
+				</span>
+				 | 
+				<span class="categories">
+				  分类：<a href="https://futuresuperstar.github.io/blog/html/categories/index.html#sundry" title="杂谈">sundry</a>&nbsp;
+				</span>
+				 | 
+				<span class="tags">
+				  标签：<a href="https://futuresuperstar.github.io/blog/html/tags/index.html#code" title="code">code</a>&nbsp;
+				</span>
+			</section>
+			<section id="main-content" class="main-content">
+				<p>马上就要过年回家了，头等大事自然就是买火车票啦。提起火车票自然就是12306的验证码。</p>
+				<p>目前我们项目中最常用的验证码思路就是后台生成几个随机字符，然后使用流输出到前台，同时把这几个字符保存在内存session中，也许还会设置这个验证码的时效。这里就不提供具体的代码了，这种代码网上一堆。</p>
+				<p>但是这个思路其实是有问题的。如果用户量达到很大的时候就会挤爆内存了，如果是分布式的应用还得考虑session同步问题了。</p>
+				<p>正巧昨天就有人说了手机验证码的问题，由此我就延伸到了其它的验证码，思路都是类似的。</p>
+				<p>具体思路就是利用算法，CPU计算这个的速度还是相当快的。我们可以取当前用户的识别码(jsessionid或手机号等)，加上当前时间戳，再加上系统的盐值，然后对这个串取摘要或者hash等，然后取这个结果中的几个字符传递到前台。这样验证的时候也可以利用算法验证了，而不是从内存中取。</p>
+				<p>目前我还没有其它思路，如果有更好的主意，也可以留言告诉我，欢迎不吝赐教。</p>
+			</section>
+			<aside id="sidebar">
+				<h2><p>个人档案</p></h2>
+				<p class="fn">姓名：王明</p>
+				<p class="nickname">网名：xyan | 淡泊</p>
+				<p>邮箱：<a style="color:#2879d0" href="mailto:wangming1255@aliyun.com">wangming1255@aliyun.com</a></p>
+				<p>QQ：543095204</p>
+				<p class="address">现居：上海市&mdash;虹口区</p>
+				<p class="role">职业：网站设计、网站制作</p>
+			</aside>
+			<div class="clearfix"></div>
+		</article>
+	</div>
+</div>
+<section class="relative">
+	<br/>
+	<span>
+	<a   class="pagePre disable"  >上一篇：无</a>
+		&nbsp;&nbsp;&nbsp;
+	<a   class="pageNext disable"  >下一篇：无</a>
+	</span>
+</section>
+<!-- 多说评论框 start -->
+<div class="ds-thread"
+	data-thread-key="https://futuresuperstar.github.io//blog/html/identifyingCode.html"
+	     data-title="验证码的新思路--Blog by FutureSuperstar"
+	data-url="https://futuresuperstar.github.io//blog/html/identifyingCode.html"></div>
+<!-- 多说评论框 end -->
+<!-- 公共JS代码  -->
+<script type="text/javascript" src="../js/main.js"></script>
+</body>
+</html>

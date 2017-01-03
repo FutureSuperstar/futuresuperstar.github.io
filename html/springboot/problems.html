@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset='utf-8'>
+<meta http-equiv="X-UA-Compatible" content="chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="author" content="xyan" />
+<meta name="keywords" content="个人博客,github博客,wangming,王明" />
+<meta name="description" content="王明在github上搭建个的个人博客" />
+<title>springboot的几个问题--Blog by FutureSuperstar</title>
+<link rel="shortcut icon" type="image/x-icon" href="https://futuresuperstar.github.io/blog/images/ico/18.ico" />
+<link href='https://fonts.googleapis.com/css?family=Galdeano' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Electrolize' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Cuprum' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="../../css/style.css" media="screen"/>
+<!--[if lt IE 9]>
+<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+<style type="text/css">
+figure{margin-left:0;}
+dl dd{border: 1px solid #eee;margin-bottom:12px;}
+</style>
+</head>
+<body>
+<div class="container">
+	<div role="main">
+		<header>
+			<h1>springboot的几个问题<small class="status-tag reprint">转</small></h1>
+		</header>
+		<nav>
+			<span><a title="首页"  href="https://futuresuperstar.github.io/blog">首页</a></span> 
+			<span><a title="分类"  href="https://futuresuperstar.github.io/blog/html/categories/index.html">分类</a></span> 
+			<span><a title="标签"  href="https://futuresuperstar.github.io/blog/html/tags/index.html">标签</a></span> 
+			<span><a title="留言"  href="https://futuresuperstar.github.io/blog/html/visit/index.html">留言</a></span> 
+			<span><a title="关于我" href="https://futuresuperstar.github.io/blog/html/about/index.html">关于</a></span>
+		</nav>
+		<article class="content">
+			<section class="meta">
+				<!-- <span class="time">
+					<time datetime="2016-12-23">2016-12-20</time>
+				</span>
+				 | 
+				<span class="categories">
+				  分类：<a href="https://futuresuperstar.github.io/blog/html/categories/springboot/index.html" title="springboot">springboot</a>&nbsp;
+				</span>
+				 | 
+				<span class="tags">
+				  标签：<a href="https://futuresuperstar.github.io/blog/html/tags/springboot/index.html" title="springboot">springboot</a>&nbsp;
+				</span> -->
+			</section>
+			<section class="main-content">
+				<dl>
+					<dd style="font-style:normal;border:none;">Spring Boot是由Pivotal团队提供的全新框架，其设计目的是用来简化新Spring应用的初始搭建以及开发过程。该框架使用了特定的方式来进行配置，从而使开发人员不再需要定义样板化的配置。通过这种方式，Boot致力于在蓬勃发展的快速应用开发领域（rapid application development）成为领导者。</dd>
+					<dt>Spring Boot 适用场景</dt>
+					<dd>
+						<figure>
+							<p>企业项目开发的时候，Spring Boot 有哪些使用场景呢，已知的坑是什么呢？<p>
+							<p>SSO，分布式文件系统，微服务使用等等，在企业版应用中，这些都是非常顶用的。如果硬说有坑的话，就是服务多了，服务部署和运维管理必须要上一个档次，否则就会显得混乱起来。
+							</p>
+						</figure>
+					</dd>
+					<dd>
+						<figure>
+							<p>个人感觉，从快速构建方面确实很高效，而且这样框架也是经过了很多实践之后，结晶的产品。但是，对于新人来说，直接应用 Spring Boot，还是感觉不是很理想，可能会使新人对于 Spring 框架的理解上产生阻碍。对于 Spring Boot 本身，还是非常不错的，云部署，快速构建都很不错。我的问题是，公司对于 Spring Boot 的应用有什么要求吗？一般开发会在什么情况下使用它？对于企业级的开发是否也有要求？</p>
+							<p>Spring Boot 对背景知识没有特别要求，对于新人来说，搭建好项目让其跟随开发，更加容易入手。对于公司的要求，主要看工程的规模和部署的方式，如果使用 Docker 部署并需要设置负载均衡等对运维人员和服务器的要求会高一些。</p>
+						</figure>
+					</dd>
+					<dd>
+						<figure>
+							<p>经常看到 Spring Boot 和微服务关联起来，是因为 Spring Boot 开发和部署比较快么，能具体说说么？</p>
+							<p>Spring Boot 确实是以快速开发为目标而设计的，它的简单易用的特性确实减轻了开发者的负担，从而可以提高开发的生产率。你的问题需要全面理解一下 Spring Boot，可以通过它的官方网站进行一些了解。</p>
+						</figure>
+					</dd>
+					<dd>
+						<figure>
+							<p>这个框架适合开发什么类型的项目</p>
+							<p>最适合用来开发 Web 应用项目。</p>
+						</figure>
+					</dd>
+					<dt>Spring Boot 与 jar</dt>
+					<dd>
+						<figure>
+							<p>已经使用 Spring Boot 有几个月了，也开始在使用 Spring Boot 搭建公司的基础系统。我理解的 Spring Boot 应该是提倡以 jar 的形式部署，但这种方式在包的体积过大的情况下部署太慢了，之前我们的业务和服务器都在国外，上传的时候速度慢得一塌糊涂，除了改成 war 发布，还有什么其他办法么？</p>
+							<p>其实最好的方式，还是使用 jar，然后结合使用 Docker 来发布。如果一个项目的 jar 包过大的话，要看看造成这种情况的主要原因是什么。是不是 jar 包中包含的资源文件太多，还是项目包含的业务太复杂，如果是前种原因，考虑优化一些图片资源，或者使用分布式文件系统来存储图片资源。如果是后一种原因，是不是考虑将原项目使用模块化方式进行细分。</p>
+						</figure>
+					</dd>
+					<dd>
+						<figure>
+							<p>Spring Boot 集成了服务器，以 jar 文件发布，减少对外部文件和环境依赖。但长期集成导致体积过大，这的确是个问题，能不能考虑做一些工具对 jar 进行减肥呢？</p>
+							<p>这就要分析一下造成 jar 过大的原因是什么，如果是因为资源文件太多造成的，那就要优化一些图片的设计，或使用其它方式来链接资源文件，如果是因为一个项目包含的业务太多太复杂造成的，就要考虑是否可以将项目进行拆分。</p>
+						</figure>
+					</dd>
+					<dd>
+						<figure>
+							<p>如果是用 Spring Boot 来做成 jar 服务启动，怎么衡量服务粒度。因为每个服务都要运行 Spring，或者也会加个 dubbo 的依赖等等。跑起多个实例，这就重复了。其实就是单体应用跟分布式应用的点。</p>
+							<p>主要还是看你怎样配置服务，如果使用 Spring Cloud 的服务发现来管理服务，可以通过负载均衡的配置支持多个服务同时对外提供服务。</p>
+						</figure>
+					</dd>
+					<dd>
+						<figure>
+							<p>Spring Boot 同样支持以标准的 war 方式部署应用，只是在启动类上需要进行细微的调整，并不强调始终以 jar 方式部署</p>
+						</figure>
+					</dd>
+					<dd>
+						<figure>
+							<p>使用 Spring Boot 的时候，页面文件会被打包到 jar 中，如果只更新页面文件，又要对 jar 进行打包上传。有没有简单的方法？类似原先的 Tocmat 部署就可以直接修改页面文件。不需要重启的方法？</p>
+							<p>可以使用 war 方式部署 。</p>
+						</figure>
+					</dd>
+					<dd>
+						<figure>
+							<p>Spring Boot 项目如何做到 libs jar 和 app jar 分开，很多时候，我只是更新应用层代码，本地编译好上传上去，启动的时候通过脚本启动，那么如何将 libs 和 app 分别打包并启动呢？</p>
+							<p>使用 war 方式发布就可以实现你的要求。</p>
+						</figure>
+					</dd>
+					<dt>Spring Boot 与 Docker</dt>
+					<dd>
+						<figure>
+							<p>请简单介绍一下 Spring Boot 和 Docker 结合</p>
+							<p>真要简单地说：将 Spring Boot 项目打包成 jar，然后通过 Docker 进行部署。用 Spring Boot 开发的项目，非常适合用 Docker 来部署。<br>
+							       这两个东西之间没有任何关系。Spring Boot 主要的目的是简化开发和部署过程中配置文件的使用，使用了很多约定俗成的规则，按照这些约定的规则来开发，可以大大减少配置文件的使用，甚至完全不使用配置文件都是可能的。Docker 只是把运行环境，像 OS、JVM、Nginx 等等打包到一起的个工具而已。把 Spring Boot 生成的可执行的 jar 包放进这个运行环境中来运行。这两个工具都只是简化了开发和运维的繁杂过程，使用了很多自动化处理的技术而已。</p>
+						</figure>
+					</dd>
+					<dd>
+						<figure>
+							<p>Spring Boot 从开发到部署的最佳实践 ，是否必须依赖容器技术，如何平滑过渡到 Docker 容器上?</p>
+							<p>Spring Boot 并不依赖 Docker 容器，也可以使用 war 方式或者按照传统的方式直接使用文件系统来发布，只是使用 Docker，更能发挥它在各个方面优势。</p>
+						</figure>
+					</dd>
+					<dd>
+						<figure>
+							<p>能分享下 Spring Cloud 和 Docker 部署方面的经验吗？</p>
+							<p>使用 Docker 发布 Spring Boot 项目（ https://my.oschina.net/syic/blog/799656 ）</p>
+						</figure>
+					</dd>
+					<dt>旧的项目迁移至 Spring Boot</dt>
+					<dd>
+						<figure>
+							<p>旧的项目转到 Spring Boot 有什么条件？</p>
+							<p>不需要什么条件，使用 Spring Boot，最好是对原来的项目进行重新设计，或者使得原来的逻辑进行重建。</p>
+						</figure>
+					</dd>
+					<dd>
+						<figure>
+							<p>是不是微服务架构比较适合用 Spring Boot？那对于老的系统或代码，怎么转到 Spring Boot？</p>
+							<p>所有使用 Web 方式开发的项目都适合使用 Spring Boot 框架，并从中获益，微服务开发是它的一大特色。旧系统的代码不能转换，可以使用原来的业务逻辑进行重建。</p>
+						</figure>
+					</dd>
+					<dt>与相关的项目对比</dt>
+					<dd>
+						<figure>
+							<p>几年前做开发还是用的 Spring，包括 Spring 的 Bean 工厂方案还有 SpringMVC，现在主要业务的开发一般用的公司自研框架，所以对 Spring 感觉比较生疏了，我就想了解了解，Spring Boot 同几年前的 Spring 相比，都有哪些方面的发展和变化，能大概讲讲吗？</p>
+							<p>Spring Boot 是在 Spring 的基础建立起来的，保留了 Spring 的一些精髓，同时也摒弃了一些糟粕，表现在：<br>
+								统一工程配置，可以不使用 XML 配置<br>
+								使用一些组件，具有自动配置的功能<br>
+								内嵌了 Tomcat，性能指标等服务<br>
+								更方便独立部署或使用 Docker 配置成高可用和高性能的平台
+							</p>
+						</figure>
+					</dd>
+					<dd>
+						<figure>
+							<p>Spring Boot 与传统 SSH 框架的主要区别在哪些方面？</p>
+							<p>Spring Boot 能最大限度地简化配置，也可以嵌入 Tcomcat 等服务，并且在开发企业级应用、分布式应用等方面更加得心应手，更加难能可贵的是使用非常简单，非常适合快速开发的需要，符合软件工程构件化发展的目标。</p>
+						</figure>
+					</dd>
+					<dd>
+						<figure>
+							<p>Spring Boot 和 Spring MVC 有什么区别？</p>
+							<p>Spring MVC 还是属于 Spring 框架的，Spring Boot 是在 Spring 的基础之上建立的一个全新开发框架。</p>
+						</figure>
+					</dd>
+					<dd>
+						<figure>
+							<p>Spring Boot 构建微服务，和目前一些新的例如 light java framework , sparkjava 在构建微服务上有什么优势？</p>
+							<p>在 Spring Boot 家族中，使用云应用开发工具集 Spring Cloud 开发微服务应用，具有得天独厚的优势。这里所说的微服务，是指功能强大，业务单一的分布式应用系统，并非简单指项目的微型结构。</p>
+						</figure>
+					</dd>
+					<dd>
+						<figure>
+							<p>用了 Spring Boot 是不是就不用再搞 Spring、SpringMVC、Hibernate、Struts、MyBatis 这些了？</p>
+							<p>对的，十分正确。对于数据库来说，使用 JPA 就能一网打尽了。</p>
+						</figure>
+					</dd>
+					<dd>
+						<figure>
+							<p>Spring Boot 还是很喜欢的，简化了不少配置，但实际中微服务的划分是个问题。</p>
+							<p>服务的划分这个和 Spring Boot 没有任何关系。微服务的一个难点就是服务的划分，有些服务是按技术特点来划分，比如像 push 服务、sms 服务等。有些是按业务特点来划分，像订单服务等，有些根据实际情况还进行服务的分层。</p>
+						</figure>
+					</dd>
+					<dd>
+						<figure>
+							<p> 使用 Spring Boot，其他的必须框架还需要配置吗？</p>
+							<p>如果使用 Maven 或其它项目管理工具，都可以在工程配置引用依赖包。</p>
+						</figure>
+					</dd>
+					<dt>使用中遇到的问题</dt>
+					<dd>
+						<figure>
+							<p>Spring Boot 有多种 Web 容器如默认的 Tomcat, Undertow 等，从综合上使用哪一个性能更好。Undertow 如何像 Tomcat一样配置 http 自动跳转到 https？</p>
+							<p>跟 Tomcat 相比，Jetty 会显得更加小巧一些，但是综合来看，还是使用默认的 Tomcat 比较实在。<br>
+								Undertow 比 Tomcat 性能要好得多，https 一般不需要在 Undertow 这一层来配。一般都会在 Undertow 之前加一个 Nginx，在 Nginx中配置就行了。<br>
+								性能测试 Undertow 比 Tomcat 稍好一些。稳妥可以用 Tomcat，想改换一下思路可以用 Undertow。http redirect to https 用 Undertow 有折中的办法是引入 Spring Security。不过一般还是应该前端配 Nginx 或者 Apache Http Server 对外开放 https 服务，内部用 http 做反向代理通道协议。<br>
+								http://menelic.com/2016/01/06/java-rest-api-benchmark-tomcat-vs-jetty-vs-grizzly-vs-undertow/ 看了这个博客虽然 Tomcat 慢一些，但是实际业务中 Tomcat 并不会是瓶颈，使用 Tomcat 也是一个很好的选择，毕竟使用了这么多年了，对各项配置也比较熟悉了。</p>
+						</figure>
+					</dd>
+					<dd>
+						<figure>
+							<p>我用 Spring Boot 很久了，从 1.2.5 开始用，最近一个项目预计使用分布式高可用，我也把该弄的框架都弄好了，可是最后客户取消分布式高可用，采用传统模式。Java 只负责后台接口，APP 接受数据，我现在有个权限问题，原来用的 Spring Security 做的权限前后端分离，现在只有接口，这个权限怎么进行管理，我看里面有回答说用 Spring Cloud 进行权限控制，这个 Cloud 对传统模式是否繁重？<br>
+								定时任务的调度，自有 Quartz 调度是否支持集群，多个节点（非集群 ng 分发），但是定时任务我想让他集群，不允许多个节点都启动调度任务，只能某一节点不能执行其他节点才能触发，这个需要用 zookeeper 之类工具进行监测么？
+							</p>
+							<p>对于企业级应用来说，权限管理建议使用 SSO 的方式来实现，这在《深入实践 Spring Boot》一书中有实际的使用实例，主要也是使用了 Spring Security 和 OAuth2 的技术。<br>
+								Zookeeper 和 Spring-Cloud-Eureka 一样，都是一个服务注册和发现的管理工具，而 Spring-Cloud-Eureka 在 Spring Boot 中使用，更加适合用来调度使用 Spring Cloud 开发的微服务。至于你所说的定时任务调度，应该不属于这个范围吧。</p>
+						</figure>
+					</dd>
+					<dd>
+						<figure>
+							<p>Spring Boot 如何更好的更简洁的实现多表关联查询？</p>
+							<p>在实体建模时为多表建立关联关系，这样查询一个实体对象时就可以连带查出它关联的其它对象，即实现多表关联查询。</p>
+						</figure>
+					</dd>
+					<dd>
+						<figure>
+							<p>使用 Spring Boot 搭建的微服务是否考虑服务之间的权限，例如访问权限，若需要，Spring Boot 本身有提供比较好的解决方案吗？<br>
+								Spring Boot 目前对于 Spring Cloud 生态有很好的支持和定制化吗？</p>
+							<p>Spring Boot 及其前身 Spring，对于任何第三方都能提供很好的支持，更不用说对 Spring Cloud 的支持了。对于系统的安全管理和访问控制，推荐使用 Spring Cloud 的 SSO，它与 Spring Boot 框架能够达到非常融洽的效果。</p>
+						</figure>
+					</dd>
+					<dd>
+						<figure>
+							<p>在使用 Spring Boot 来开发公司产品的时候，根据业务进行拆分，这样最后部署的时候会出现 N 个 jar。这样的情况下，除了用 Docker 来部署还有别的什么方式吗？在部署方面有没有哪些需要注意的地方？</p>
+							<p>N 好像有点大吧，原来的工程分成十几个项目，已经很不错了。使用 Spring Boot 的好处是，可以统一项目配置，和使用发现服务，并更好地管理负载均衡，提高系统的高可用性。</p>
+						</figure>
+					</dd>
+					<dd>
+						<figure>
+							<p>请问用 jar 的方式发布，如何在系统重启后能自动启动？</p>
+							<p>Spring Boot 打包的是个可运行的 jar，使用 Java 命令来启动。写个 shell 脚本来启动就行了，把 shell 脚本设置为开机运行。不管使用哪种方式部署，自动启动都需要编写脚本来实现。</p>
+						</figure>
+					</dd>
+					<dd>
+						<figure>
+							<p>在 Spring Boot 中，如何通过参数配置，设置 Tomcat 的 maxConnections 属性？</p>
+							<p>在 Spring Boot 的配置文件中好像没有这个配置参数，如果一定要这个配置，也可以将项目用 war 方式发布，然后像以前配置 Tomcat 一样配置。</p>
+						</figure>
+					</dd>
+					<dd>
+						<figure>
+							<p>Spring Boot 做 REST API 开发如何？如果 Controller 接受的参数模型比较复杂，基本是对象一层套一层，那如何定制这类的 API 接口？</p>
+							<p>在存储库接口中使用注解 @RepositoryRestResource，就能直接提供 Rest API
+								在控制器中使用 @RestController，其中所定义的 URL 就同时是一个 Rest 资源</p>
+						</figure>
+					</dd>
+					<dd>
+						<figure>
+							<p>Spring Boot 在开发阶段有热部署吗？类似 JRebel 那种</p>
+							<p>如果设置成连接 Tomcat 服务器来启动应用，可以设置成热部署的方式。</p>
+						</figure>
+					</dd>
+				</dl>
+				<a  target="_blank" href="http://www.toutiao.com/i6361540011430511106/?tt_from=mobile_qq&utm_campaign=client_share&app=news_article&utm_source=mobile_qq&iid=6533349101&utm_medium=toutiao_android">源文章</a>
+			</section>
+			<aside id="sidebar">
+				<h2><p>个人档案</p></h2>
+				<p class="fn">姓名：王明</p>
+				<p class="nickname">网名：xyan | 淡泊</p>
+				<p>邮箱：<a style="color:#2879d0" href="mailto:wangming1255@aliyun.com">wangming1255@aliyun.com</a></p>
+				<p>QQ：543095204</p>
+				<p class="address">现居：上海市&mdash;虹口区</p>
+				<p class="role">职业：网站设计、网站制作</p>
+			</aside>
+			<div class="clearfix"></div>
+		</article>
+	</div>
+</div>
+<section class="relative">
+	<br/>
+	<span>
+	<a   class="pagePre disable"  >上一篇：无</a>
+		&nbsp;&nbsp;&nbsp;
+	<a   class="pageNext disable"  >下一篇：无</a>
+	</span>
+</section>
+<!-- 多说评论框 start -->
+<div class="ds-thread" data-thread-key="https://futuresuperstar.github.io/blog/html/springboot/problems.html" 
+     data-title="springboot的几个问题--Blog by FutureSuperstar" d
+     ata-url="https://futuresuperstar.github.io/blog/html/springboot/problems.html"></div>
+<!-- 多说评论框 end -->
+<script type="text/javascript" src="../../js/main.js"></script>
+</body>
+</html>

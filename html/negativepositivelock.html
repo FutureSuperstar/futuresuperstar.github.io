@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset='utf-8'>
+<meta http-equiv="X-UA-Compatible" content="chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="author" content="xyan" />
+<meta name="keywords" content="个人博客,github博客,wangming,王明" />
+<meta name="description" content="王明在github上搭建个的个人博客" />
+<title>悲观锁和乐观锁--Blog by FutureSuperstar</title>
+<link rel="shortcut icon" type="image/x-icon" href="https://futuresuperstar.github.io/blog/images/ico/18.ico" />
+<link href='https://fonts.googleapis.com/css?family=Galdeano' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Electrolize' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Cuprum' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="../css/style.css" media="screen"/>
+<!--[if lt IE 9]>
+<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+<style type="text/css">
+.main-content p{text-indent: 2em;}
+</style>
+</head>
+<body>
+<div class="container">
+    <div role="main">
+        <header>
+            <h1>悲观锁和乐观锁</h1>
+        </header>
+        <nav>
+            <span><a title="首页"  href="https://futuresuperstar.github.io/blog">首页</a></span> 
+            <span><a title="分类"  href="https://futuresuperstar.github.io/blog/html/categories/index.html">分类</a></span> 
+            <span><a title="标签"  href="https://futuresuperstar.github.io/blog/html/tags/index.html">标签</a></span> 
+            <span><a title="留言"  href="https://futuresuperstar.github.io/blog/html/visit/index.html">留言</a></span> 
+            <span><a title="关于我" href="https://futuresuperstar.github.io/blog/html/about/index.html">关于</a></span>
+        </nav>
+        <article class="content">
+            <section class="meta">
+                <span class="time">
+                    <time datetime="2016-12-23">2016-12-23</time>
+                </span>
+                 | 
+                <span class="categories">
+                                                     分类：<a href="https://futuresuperstar.github.io/blog/html/categories/index.html#sundry" title="杂谈">杂谈</a>&nbsp;
+                </span>
+                 | 
+                <span class="tags">
+                                                    标签：<a href="https://futuresuperstar.github.io/blog/html/tags/index.html#lock" title="lock">锁</a>&nbsp;
+                </span>
+            </section>
+            <section id="main-content" class="main-content">
+                <p>本文所说的悲观锁和乐观锁不限于数据库，指的是一种思想。</p>
+                <p>悲观锁是一种保守的思想，也就是字面的悲观的意思。在使用了悲观锁的时候，每次去拿数据的都会认为数据会被人修改，所以每次拿数据时都会锁上，这样别人就会阻塞，直到它拿到锁。悲观锁的锁具有排他性。</p>
+                <p>乐观锁是一种开放的思想，字面就是很乐观了。在使用了乐观锁的时候，每次去拿数据的都认为别人不会修改数据，所以每次都不会上锁。
+                                                    但是在更新的时候会判断一下在此期间是否有别人修改这个数据，如何判断的方法就很多了，例如版本号，时间戳等。</p>
+                <p>这两种想法各有优缺点，适用于不同的场所。乐观锁适用于写比较少的场合，即很少冲突的时候，这样就省去了锁的开销。但是如果经常冲突，就会降低了性能，这个时候就该使用悲观锁了。</p>                                  
+            </section>
+            <aside id="sidebar">
+                <h2><p>个人档案</p></h2>
+                <p class="fn">姓名：王明</p>
+                <p class="nickname">网名：xyan | 淡泊</p>
+                <p>邮箱：<a style="color:#2879d0" href="mailto:wangming1255@aliyun.com">wangming1255@aliyun.com</a></p>
+                <p>QQ：543095204</p>
+                <p class="address">现居：上海市&mdash;虹口区</p>
+                <p class="role">职业：网站设计、网站制作</p>
+            </aside>
+            <div class="clearfix"></div>
+        </article>
+    </div>
+</div>
+<section class="relative">
+    <br/>
+    <span>
+    <a   class="pagePre disable"  >上一篇：无</a>
+        &nbsp;&nbsp;&nbsp;
+    <a   class="pageNext disable"  >下一篇：无</a>
+    </span>
+</section>
+<!-- 多说评论框 start -->
+<div class="ds-thread"
+    data-thread-key="https://futuresuperstar.github.io//blog/html/negativepositivelock.html"
+         data-title="悲观锁和乐观锁--Blog by FutureSuperstar"
+    data-url="https://futuresuperstar.github.io//blog/html/negativepositivelock.html"></div>
+<!-- 多说评论框 end -->
+<!-- 公共JS代码  -->
+<script type="text/javascript" src="../js/main.js"></script>
+</body>
+</html>
