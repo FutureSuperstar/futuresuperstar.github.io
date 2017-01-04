@@ -95,6 +95,7 @@ function getPage(pageNum){
         url:"https://futuresuperstar.github.io/js/"+pageNum+".json",
         dataType:"json",
         success:function(data){
+        	console.log(data!=null&&data.length>=1);
             if(data!=null&&data.length>=1){
                 var htmls=[];
                 $.each(data,function(i,o){
