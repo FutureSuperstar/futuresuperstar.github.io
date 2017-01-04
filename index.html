@@ -119,8 +119,10 @@ function getPage(pageNum){
                 $("#catalog").empty().append(htmls.join(""));
             }
         },
-        error:function(e){
-        	console.log(e);
+        error:function(XMLHttpRequest, textStatus, errorThrow){
+        	console.log(XMLHttpRequest);
+        	console.log(textStatus);
+        	console.log(errorThrow);
         	console.log("===============");
         }
     });
