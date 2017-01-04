@@ -94,6 +94,9 @@ function getPage(pageNum){
         cache:true,
         url:"https://futuresuperstar.github.io/js/"+pageNum+".json",
         dataType:"json",
+        complete:function(msg){
+        	console.log(msg);
+        },
         success:function(data){
         	console.log(data);
             if(data!=null&&data.length>=1){
