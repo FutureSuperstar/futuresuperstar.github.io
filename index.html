@@ -83,7 +83,7 @@ window.onload=function(){
 <script type="text/javascript">
 $(function(){
 	$.ajax({
-        url:"https://futuresuperstar.github.io/js/data.json",
+        url:"https://futuresuperstar.github.io/js/item.json",
         dataType:"json",
         success:function(data){
             console.log(data);
@@ -91,7 +91,7 @@ $(function(){
     });
 	$("#paginator a.active").click(function(){
 		$.ajax({
-			url:"https://futuresuperstar.github.io/js/data.json",
+			url:"https://futuresuperstar.github.io/js/item.json",
 			dataType:"json",
 			success:function(data){
 				console.log(data);
