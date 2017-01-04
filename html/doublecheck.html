@@ -91,6 +91,7 @@
                                   Object obj=client.get(key);
                                   if(obj==null){
                                         synchronized(this){
+                                            obj=client.get(key);
                                             if(obj==null){
                                                 obj=load.load(key);
                                                 client.set(key,obj);
