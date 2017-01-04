@@ -95,7 +95,7 @@ function getPage(pageNum){
         url:"https://futuresuperstar.github.io/js/"+pageNum+".json",
         dataType:"json",
         complete:function(msg){
-        	console.log(msg);
+        	console.log(msg.responseText);
         },
         success:function(data){
         	console.log(data);
@@ -116,6 +116,9 @@ function getPage(pageNum){
                 });
                 $("#catalog").empty().append(htmls.join(""));
             }
+        },
+        error:function(e){
+        	console.log(e);
         }
     });
 }
