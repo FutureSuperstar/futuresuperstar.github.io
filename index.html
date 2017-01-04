@@ -78,18 +78,20 @@ window.onload=function(){
 	var count=document.getElementById("catalog").children.length-2;
 	document.getElementById("countNum").innerHTML=count;
 }
-//初始化分页
-function initPage(){
-	var paginator=document.getElementById("paginator"),
-	   pages=paginator.children;
-	var currentPage=null;
-	for(var i=0;i<pages.length;i++){
-		if(pages[i].className.indexOf("current-page")>-1){
-			currentPage=pages[i];
-			break;
-		}
-	}
-}
+</script>
+<script type="text/javascript" src="http://lib.sinaapp.com/js/jquery/1.9.1/jquery-1.9.1.min.js"></script>
+<script type="text/javascript">
+$(function(){
+	$("#paginator a.active").click(function(){
+		$.ajax({
+			url:"https://futuresuperstar.github.io/js/data.json",
+			dataType:"json",
+			success:function(data){
+				console.log(data);
+			}
+		});
+	});
+});
 </script>
 </body>
 </html>
