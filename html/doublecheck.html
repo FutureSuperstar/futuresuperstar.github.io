@@ -55,11 +55,8 @@
 	                <pre>
 	                  <code class="java">
 	                      public class Singleton{
-	                          
 	                          private static Singleton singleton;
-	                          
 	                          private Singleton(){}
-	                          
 	                          public static Singleton getInstance(){
 	                              if(singleton==null){
 	                                  synchronized(Singleton.class){
@@ -75,7 +72,38 @@
 	                      }
 	                  </code>
 	                </pre>
-                
+                </div>
+                <p>
+                                                    在以上的代码中就两次检查了singleton是否为空，第一次检查的时候没有加锁，第二次加锁了再检查一次。要注意的点就是第二次检查。
+                </p>
+                <p>再举另一个常用的双重检查就是取缓存的时候。</p>
+                <div>
+                    <pre>
+                      <code class="java">
+                          public class CacheService{
+                          
+                              private CacheManager client;
+                              
+                              public static Object getCache(String key,CallBack load){
+                                  if(StringUtils.isBlank(key)){
+                                        return null;
+                                  }
+                                  Object obj=client.get(key);
+                                  if(obj==null){
+                                        synchronized(this){
+                                            if(obj==null){
+                                                obj=load.load(key);
+                                                client.set(key,obj);
+                                            }
+                                            return obj;
+                                            
+                                        }
+                                  }
+                                  return obj;
+                              }
+                          }
+                      </code>
+                    </pre>
                 </div>
             </section>
             <aside id="sidebar">
