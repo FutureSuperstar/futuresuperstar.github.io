@@ -73,7 +73,7 @@ function getPage(pageNum){
             if(data!=null&&data.length>=1){
                 var htmls=[];
                 $.each(data,function(i,o){
-                    if(!!o.datetime){
+                    if(!!o.datetime){//
                         htmls.push('<li class="catalog-item">');
                         htmls.push('<time datetime="'+o.datetime+'">'+o.datetime+'</time>');
                         htmls.push('<a href="'+o.href+'" title="'+o.text+'">'+o.text+'</a>');
