@@ -1,6 +1,6 @@
 title: welcome to futuresuperstar
 paginate: 5
-paginate_path: blog/page:num
+paginate_path: page:num
 
 links:
   - title: "订阅"
