@@ -82,6 +82,13 @@ window.onload=function(){
 <script type="text/javascript" src="https://cdn.bootcss.com/jquery/1.12.4/jquery.js"></script>
 <script type="text/javascript">
 $(function(){
+	$.ajax({
+        url:"https://futuresuperstar.github.io/js/data.json",
+        dataType:"json",
+        success:function(data){
+            console.log(data);
+        }
+    });
 	$("#paginator a.active").click(function(){
 		$.ajax({
 			url:"https://futuresuperstar.github.io/js/data.json",
