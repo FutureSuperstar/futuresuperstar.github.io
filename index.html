@@ -82,23 +82,39 @@ window.onload=function(){
 <script type="text/javascript" src="https://cdn.bootcss.com/jquery/1.12.4/jquery.js"></script>
 <script type="text/javascript">
 $(function(){
-	$.ajax({
-        url:"https://futuresuperstar.github.io/js/item.json",
-        dataType:"json",
-        success:function(data){
-            console.log(data);
-        }
-    });
+	getPage(1);
 	$("#paginator a.active").click(function(){
-		$.ajax({
-			url:"https://futuresuperstar.github.io/js/item.json",
-			dataType:"json",
-			success:function(data){
-				console.log(data);
-			}
-		});
+		var pageNum=$(this).text();
+		getPage(pageNum);
 	});
 });
+
+function getPage(pageNum){
+	$.ajax({
+        cache:true,
+        url:"https://futuresuperstar.github.io/js/"+pageNum+".json",
+        dataType:"json",
+        success:function(data){
+            if(data!=null&&data.length>=1){
+                var htmls=[];
+                $.each(data,function(i,o){
+                    if(!!o.datetime){
+                        htmls.push('<li class="catalog-item">');
+                        htmls.push('<time datetime="'+o.datetime+'">'+o.datetime+'</time>');
+                        htmls.push('<a href="'+o.href+'" title="'+o.text+'">'+o.text+'</a>');
+                        if(!o.original){
+                            htmls.push('<small class="status-tag reprint">转</small>');
+                        }
+                        htmls.push('</li>');
+                    }else{
+                        htmls.push('<li class="catalog-seperator">'+o.text+'</li>');
+                    }
+                });
+                $("#catalog").empty().append(htmls.join(""));
+            }
+        }
+    });
+}
 </script>
 </body>
 </html>
