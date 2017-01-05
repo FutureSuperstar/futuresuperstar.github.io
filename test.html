@@ -2,5 +2,12 @@
 layout: default
 ---
 <div class="bs-docs-featurette">
-   测试jekyll
+{% for post in site.posts %}
+<div class="article">
+    <div class="well">
+        <h1 class="none"><a href="{{ site.baseurl}}{{ post.url }}">{{ post.title }} {{ post.date | date: "（%Y年%m月%d日）" }}</a></h1>
+        <div class="content">{{ post.excerpt | remove: '<p>' | remove: '</p>' }}</div>
+    </div>
+</div>
+{% endfor %}
 </div>
