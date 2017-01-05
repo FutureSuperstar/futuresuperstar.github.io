@@ -53,22 +53,25 @@
                 <p>有一种单例模式，就叫双重检查的单例模式。具体代码如下：</p>
                 <pre>
                   <code class="java">
-	public class Singleton{
-	    private static volatile Singleton singleton;
-	    private Singleton(){}
-	    public static Singleton getInstance(){
-	        if(singleton==null){
-	            synchronized(Singleton.class){
-	                if(singleton==null){
-	                    singleton=new Singleton();
-	                }
-	                return singleton;
-	            }
-	        }else{
-	            return singleton;
-	        }
-	    }
-	}
+  public class Singleton{
+  
+    private static volatile Singleton singleton;
+    
+    private Singleton(){}
+    
+    public static Singleton getInstance(){
+       if(singleton==null){
+           synchronized(Singleton.class){
+               if(singleton==null){
+                   singleton=new Singleton();
+               }
+               return singleton;
+           }
+       }else{
+           return singleton;
+       }
+    }
+  }
                   </code>
                 </pre>
                 <p>
