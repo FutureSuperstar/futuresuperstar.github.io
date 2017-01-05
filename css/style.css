@@ -72,11 +72,13 @@ small[class*=status-tag] {border-color: #aaa;color: #8284E9; border-radius: 50%;
 @media only screen and (max-width: 767px) {}
 @media only screen and (min-width: 480px) and (max-width: 767px) {
 	.container{max-width: 88%;}
+	.container .content,.container .content .main-content,.container .content p{width: 100%}
 	.ds-thread{width: 88%;}
 	aside#sidebar{min-height: 0;float: none;height: 0; display: none;}
 }
 @media only screen and (max-width: 479px) { 
 	.container{max-width: 88%}
+	.container .content,.container .content .main-content,.container .content p{width: 100%}
 	.ds-thread{width: 88%;}
 	aside#sidebar{min-height: 0;float: none;height: 0; display: none;}
 }
