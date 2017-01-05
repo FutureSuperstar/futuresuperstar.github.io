@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset='utf-8'>
+<meta http-equiv="X-UA-Compatible" content="chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="author" content="xyan" />
+<meta name="keywords" content="个人博客,github博客,wangming,王明" />
+<meta name="description" content="王明在github上搭建个的个人博客" />
+<title>双重检查--Blog by FutureSuperstar</title>
+<link rel="shortcut icon" type="image/x-icon" href="https://futuresuperstar.github.io/images/ico/18.ico" />
+<link href='https://fonts.googleapis.com/css?family=Galdeano' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Electrolize' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Cuprum' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="../css/style.css" media="screen"/>
+<!--[if lt IE 9]>
+<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+<style type="text/css">
+.main-content p{text-indent: 2em;}
+</style>
+</head>
+<body>
+<div class="container">
+    <div role="main">
+        <header>
+            <h1>双重检查</h1>
+        </header>
+        <nav>
+            <span><a title="首页"  href="https://futuresuperstar.github.io">首页</a></span> 
+            <span><a title="分类"  href="https://futuresuperstar.github.io/html/categories">分类</a></span> 
+            <span><a title="标签"  href="https://futuresuperstar.github.io/html/tags">标签</a></span> 
+            <span><a title="留言"  href="https://futuresuperstar.github.io/html/visit">留言</a></span> 
+            <span><a title="关于我" href="https://futuresuperstar.github.io/html/about">关于</a></span>
+        </nav>
+        <article class="content">
+            <section class="meta">
+                <span class="time">
+                    <time datetime="2017-01-04">2017-01-04</time>
+                </span>
+                 | 
+                <span class="categories">
+                  分类：<a href="https://futuresuperstar.github.io/html/categories/index.html#sundry" title="杂谈">sundry</a>&nbsp;
+                </span>
+                 | 
+                <span class="tags">
+                  标签：<a href="https://futuresuperstar.github.io/html/tags/index.html#doublecheck" title="双重检查">双重检查</a>&nbsp;
+                </span>
+            </section>
+            <section id="main-content" class="main-content">
+                <p>双重检查是并发的一种解决方案，是一种比较简单的解决方案，也很容易明白。</p>
+                <p>有一种单例模式，就叫双重检查的单例模式。具体代码如下：</p>
+                <pre>
+                  <code class="java">
+  public class Singleton{
+  
+    private static volatile Singleton singleton;
+    
+    private Singleton(){}
+    
+    public static Singleton getInstance(){
+       if(singleton==null){
+           synchronized(Singleton.class){
+               if(singleton==null){
+                   singleton=new Singleton();
+               }
+               return singleton;
+           }
+       }else{
+           return singleton;
+       }
+    }
+  }
+                  </code>
+                </pre>
+                <p>
+                                                    在以上的代码中就两次检查了singleton是否为空，第一次检查的时候没有加锁，第二次加锁了再检查一次。要注意的点就是第二次检查。
+                </p>
+                <p>注意：上面的singleton用了volatile来修饰,原因就是不同的编译器初始化对象的顺序是不同的。初始化对象分成三步进行：<br/>
+                                                        （1）、分配内存<br/>
+                                                        （2）、将第一步的地址和当前对象关联<br/>
+                                                        （3）、初始化对象<br/>  
+                                                        在不同的编译器上面，第三步和第二步的顺序是不能保证的。因此上面的每次判空的时候，都有可能是另外一个线程在初始化对象，但是没有执行第二步对象，这样的结果就是上面的单例  失效了。                                                           
+                </p>
+                <p>再举另一个常用的双重检查就是取缓存的时候。</p>
+                <pre>
+                  <code class="java">
+   public class CacheService{
+   
+       private CacheManager client;
+       
+       public static Object getCache(String key,CallBack load){
+           if(StringUtils.isBlank(key)){
+                 return null;
+           }
+           Object obj=client.get(key);
+           if(obj==null){
+                 synchronized(this){
+                     obj=client.get(key);
+                     if(obj==null){
+                         obj=load.load(key);
+                         client.set(key,obj);
+                     }
+                     return obj;
+                     
+                 }
+           }
+           return obj;
+       }
+   }
+                  </code>
+                </pre>
+                <div>
+                    <ul>
+                        <li>参考文献：</li>
+                        <li><a href="http://www.ibm.com/developerworks/java/library/j-dcl/index.html">http://www.ibm.com/developerworks/java/library/j-dcl/index.html</a></li>
+                    </ul>
+                </div>
+            </section>
+            <aside id="sidebar">
+                <h2><p>个人档案</p></h2>
+                <p class="fn">姓名：王明</p>
+                <p class="nickname">网名：xyan | 淡泊</p>
+                <p>邮箱：<a style="color:#2879d0" href="mailto:wangming1255@aliyun.com">wangming1255@aliyun.com</a></p>
+                <p>QQ：543095204</p>
+                <p class="address">现居：上海市&mdash;虹口区</p>
+                <p class="role">职业：网站设计、网站制作</p>
+            </aside>
+            <div class="clearfix"></div>
+        </article>
+    </div>
+</div>
+<section class="relative">
+    <br/>
+    <span>
+    <a   class="pagePre disable"  >上一篇：无</a>
+        &nbsp;&nbsp;&nbsp;
+    <a   class="pageNext disable"  >下一篇：无</a>
+    </span>
+</section>
+<!-- 多说评论框 start -->
+<div class="ds-thread"
+    data-thread-key="https://futuresuperstar.github.io/html/doublecheck"
+         data-title="双重检查--Blog by FutureSuperstar"
+    data-url="https://futuresuperstar.github.io/html/doublecheck"></div>
+<!-- 多说评论框 end -->
+<!-- 公共JS代码  -->
+<script type="text/javascript" src="../js/main.js"></script>
+<link href="https://cdn.bootcss.com/highlight.js/8.0/styles/monokai_sublime.min.css" rel="stylesheet">  
+<script src="https://cdn.bootcss.com/highlight.js/8.0/highlight.min.js"></script>  
+<script type="text/javascript">hljs.initHighlightingOnLoad();</script> 
+</body>
+</html>
