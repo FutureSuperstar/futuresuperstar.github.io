@@ -51,27 +51,26 @@
             <section id="main-content" class="main-content">
                 <p>双重检查是并发的一种解决方案，是一种比较简单的解决方案，也很容易明白。</p>
                 <p>有一种单例模式，就叫双重检查的单例模式。具体代码如下：</p>
-                <div>
-	                <pre>
-	                  <code class="java">
-public class Singleton{
-    private static volatile Singleton singleton;
-    private Singleton(){}
-    public static Singleton getInstance(){
-        if(singleton==null){
-            synchronized(Singleton.class){
-                if(singleton==null){
-                    singleton=new Singleton();
-                }
-                return singleton;
-            }
-        }else{
-            return singleton;
-        }
-    }
-}
-	                  </code>
-	                </pre>
+                <pre>
+                  <code class="java">
+	public class Singleton{
+	    private static volatile Singleton singleton;
+	    private Singleton(){}
+	    public static Singleton getInstance(){
+	        if(singleton==null){
+	            synchronized(Singleton.class){
+	                if(singleton==null){
+	                    singleton=new Singleton();
+	                }
+	                return singleton;
+	            }
+	        }else{
+	            return singleton;
+	        }
+	    }
+	}
+                  </code>
+                </pre>
                 </div>
                 <p>
                                                     在以上的代码中就两次检查了singleton是否为空，第一次检查的时候没有加锁，第二次加锁了再检查一次。要注意的点就是第二次检查。
@@ -83,35 +82,33 @@ public class Singleton{
                                                         在不同的编译器上面，第三步和第二步的顺序是不能保证的。因此上面的每次判空的时候，都有可能是另外一个线程在初始化对象，但是没有执行第二步对象，这样的结果就是上面的单例  失效了。                                                           
                 </p>
                 <p>再举另一个常用的双重检查就是取缓存的时候。</p>
-                <div>
-                    <pre>
-                      <code class="java">
-                          public class CacheService{
-                          
-                              private CacheManager client;
-                              
-                              public static Object getCache(String key,CallBack load){
-                                  if(StringUtils.isBlank(key)){
-                                        return null;
-                                  }
-                                  Object obj=client.get(key);
-                                  if(obj==null){
-                                        synchronized(this){
-                                            obj=client.get(key);
-                                            if(obj==null){
-                                                obj=load.load(key);
-                                                client.set(key,obj);
-                                            }
-                                            return obj;
-                                            
-                                        }
-                                  }
-                                  return obj;
-                              }
-                          }
-                      </code>
-                    </pre>
-                </div>
+                <pre>
+                  <code class="java">
+   public class CacheService{
+   
+       private CacheManager client;
+       
+       public static Object getCache(String key,CallBack load){
+           if(StringUtils.isBlank(key)){
+                 return null;
+           }
+           Object obj=client.get(key);
+           if(obj==null){
+                 synchronized(this){
+                     obj=client.get(key);
+                     if(obj==null){
+                         obj=load.load(key);
+                         client.set(key,obj);
+                     }
+                     return obj;
+                     
+                 }
+           }
+           return obj;
+       }
+   }
+                  </code>
+                </pre>
                 <div>
                     <ul>
                         <li>参考文献：</li>
