@@ -66,6 +66,7 @@ padding:1px 3px 2px;}
 .preStatement small{font-size: 12px;}
 small[class*=status-tag] {border-color: #aaa;color: #8284E9; border-radius: 50%;font-size: small;margin-left: 5px;}
 .clearfix{clear: both;height: 0;width: 0;display: block;visibility: hidden;}
+#ds-reset .ds-powered-by{display: none;}
 /* #Media Queries*/
 @media only screen and (max-width: 959px) { }
 @media only screen and (min-width: 768px) and (max-width: 959px) {}
