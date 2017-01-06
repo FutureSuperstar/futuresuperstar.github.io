@@ -12,10 +12,6 @@ var duoshuoQuery = {
 	ds.charset = 'UTF-8';
 	(document.getElementsByTagName('head')[0] || document
 			.getElementsByTagName('body')[0]).appendChild(ds);
-	ds.onload=function(){
-		console.log(11);
-		//ds-thread
-	}
 })();
 //百度
 var _hmt = _hmt || [];
