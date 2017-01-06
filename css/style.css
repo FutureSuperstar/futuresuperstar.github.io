@@ -75,6 +75,7 @@ small[class*=status-tag] {border-color: #aaa;color: #8284E9; border-radius: 50%;
 	pre{overflow-x: scroll;width: 100%}
 	.container .content,.container .content .main-content,.container .content p{width: 100%}
 	.ds-thread{width: 88%;}
+	.pagePre ,.pageNext{display: block;}
 	aside#sidebar{min-height: 0;float: none;height: 0; display: none;}
 }
 @media only screen and (max-width: 479px) { 
@@ -82,5 +83,6 @@ small[class*=status-tag] {border-color: #aaa;color: #8284E9; border-radius: 50%;
 	.container .content,.container .content .main-content,.container .content p{width: 100%}
 	pre{overflow-x: scroll;width: 100%}
 	.ds-thread{width: 88%;}
+	.pagePre ,.pageNext{display: block;}
 	aside#sidebar{min-height: 0;float: none;height: 0; display: none;}
 }
