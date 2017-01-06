@@ -24,8 +24,8 @@ blockquote p{margin:0;padding:.5em 0;}
 .catalog-item time{color:#999999;}
 .catalog-seperator{font-weight:bold;}
 .meta{font-size:12px;color:#888;}
-.pagePre{font-weight:bold;font-size:17px;color:#D0D0D0;}
-.pageNext{font-weight:bold;font-size:17px;color:#D0D0D0;}
+.pagePre{font-weight:bold;font-size:17px;}
+.pageNext{font-weight:bold;font-size:17px;}
 header{padding:.5em 0;border-bottom: 1px solid #cccccc;}
 nav{font-family:"Electrolize",sans-serif;font-size:1.1em;text-transform:uppercase;float:left;margin-left:-8em;width:6em;text-align:center;}
 nav a{display:block;padding:.7em 1em;color:#000000;}
@@ -60,7 +60,7 @@ padding:1px 3px 2px;}
 .paginator a:hover{color: white;background: #83BF73;}
 .relative{ margin: 2em auto;text-align: center; width: 100%;vertical-align: middle;}
 .ds-thread{margin: 2em auto;width:900px;}
-.disable{cursor: no-drop;}
+.disable{cursor: no-drop;color:#d0d0d0}
 .text-red{color: #f00;}
 .preStatement{color:#aaa;}
 .preStatement small{font-size: 12px;}
