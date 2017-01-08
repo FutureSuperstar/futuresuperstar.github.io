@@ -11,3 +11,158 @@
 
 
 在HTTP协议中，Cookie是怎么传递的？
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+总结ORACLE系统视图及表大全：
+dba_开头.....
+dba_users 数据库用户信息
+dba_segments 表段信息
+dba_extents 数据区信息
+dba_objects 数据库对象信息
+dba_tablespaces 数据库表空间信息
+dba_data_files 数据文件设置信息
+dba_temp_files 临时数据文件信息
+dba_rollback_segs 回滚段信息
+dba_ts_quotas 用户表空间配额信息
+dba_free_space数据库空闲空间信息
+dba_profiles 数据库用户资源限制信息
+dba_sys_privs 用户的系统权限信息
+dba_tab_privs用户具有的对象权限信息
+dba_col_privs用户具有的列对象权限信息
+dba_role_privs用户具有的角色信息
+dba_audit_trail审计跟踪记录信息
+dba_stmt_audit_opts审计设置信息
+dba_audit_object 对象审计结果信息
+dba_audit_session会话审计结果信息
+dba_indexes用户模式的索引信息
+user_开头
+user_objects 用户对象信息
+user_source 数据库用户的所有资源对象信息
+user_segments 用户的表段信息
+user_tables 用户的表对象信息
+user_tab_columns 用户的表列信息
+user_constraints 用户的对象约束信息
+user_sys_privs 当前用户的系统权限信息
+user_tab_privs 当前用户的对象权限信息
+user_col_privs 当前用户的表列权限信息
+user_role_privs 当前用户的角色权限信息
+user_indexes 用户的索引信息
+user_ind_columns用户的索引对应的表列信息
+user_cons_columns 用户的约束对应的表列信息
+user_clusters 用户的所有簇信息
+user_clu_columns 用户的簇所包含的内容信息
+user_cluster_hash_expressions 散列簇的信息
+v$开头
+v$database 数据库信息
+v$datafile 数据文件信息
+v$controlfile控制文件信息
+v$logfile 重做日志信息
+v$instance 数据库实例信息
+v$log 日志组信息
+v$loghist 日志历史信息
+v$sga 数据库SGA信息
+v$parameter 初始化参数信息
+v$process 数据库服务器进程信息
+v$bgprocess 数据库后台进程信息
+v$controlfile_record_section 控制文件记载的各部分信息
+v$thread 线程信息
+v$datafile_header 数据文件头所记载的信息
+v$archived_log归档日志信息
+v$archive_dest 归档日志的设置信息
+v$logmnr_contents 归档日志分析的DML DDL结果信息
+v$logmnr_dictionary 日志分析的字典文件信息
+v$logmnr_logs 日志分析的日志列表信息
+v$tablespace 表空间信息
+v$tempfile 临时文件信息
+v$filestat 数据文件的I/O统计信息
+v$undostat Undo数据信息
+v$rollname 在线回滚段信息
+v$session 会话信息
+v$transaction 事务信息
+v$rollstat 回滚段统计信息
+v$pwfile_users 特权用户信息
+v$sqlarea 当前查询过的sql语句访问过的资源及相关的信息
+v$sql 与v$sqlarea基本相同的相关信息
+v$sysstat 数据库系统状态信息
+all_开头
+all_users 数据库所有用户的信息
+all_objects 数据库所有的对象的信息
+all_def_audit_opts 所有默认的审计设置信息
+all_tables 所有的表对象信息
+all_indexes所有的数据库对象索引的信息
+session_开头
+session_roles 会话的角色信息
+session_privs 会话的权限信息
+index_开头
+index_stats 索引的设置和存储信息
+伪表
+dual 系统伪列表信息
+Oracle常用动态视图介绍：
+2.1.1   v$lock
+给出了锁的信息，如type字段， user type locks有3种：TM，TX，UL，system type locks有多种，常见的有：MR，RT，XR，TS等。我们只关心TM，TX锁。
+当TM锁时，id1字段表示object_id；当TX锁时，trunc(id1/power(2,16))代表了回滚段号。
+2.1.2   v$sqlarea
+共享池中存储的sql和一些相关的信息，如累计的执行次数（executions），逻辑读（buffer_gets），物理读（disk_reads）等统计信息。
+根据address和hash_value可以定位一条sql。sql_text字段存的这个sql的前1000个字符。查找整个的sql还需去v$sqltext或者v$sqltext_with_newlines。
+2.1.3   v$session
+V$SESSION是基础信息视图，用于找寻用户SID或SADDR。不过，它也有一些列会动态的变化，可用于检查用户。
+2.1.4   v$sesstat
+根据session id可以得到这个session的统计信息
+2.1.6   v$process
+v$process视图包含当前系统oracle运行的所有进程信息。常被用于将oracle或服务进程的操作系统进程ID与数据库session之间建立联系。
+2.1.7   v$transaction
+根据session id可以查到当前session正在执行的事务信息：
+select * from v$transaction where addr in (select taddr from v$session where sid=&sid );
+2.1.8   v$sort_usage
+temp表空间的使用情况，当temp表空间变得巨大的时候，根据session_addr可以得到session id，根据sqladdr和sqlhash可以得到正在执行的sql：
+2.1.9   v$sysstat
+所有instance的统计信息
+2.1.10 v$sqltext视图
+v$sqltext视图包括Shared pool中SQL语句的完整文本，一条SQL语句可能分成多个块被保存于多个记录内。
+2.1.11 V$SESSION_WAIT视图
+这是一个寻找性能瓶颈的关键视图。它提供了任何情况下session在数据库中当前正在等待什么(如果session当前什么也没在做，则显示它最后的等待事件)。当系统存在性能问题时，本视图可以做为一个起点指明探寻问题的方向。
+V$SESSION_WAIT中，每一个连接到实例的session都对应一条记录。
+2.1.12 概述
+和权限,角色相关的视图大概有下面这些:
+DBA_SYS_PRIVS: 查询某个用户所拥有的系统权限
+USER_SYS_PRIVS: 当前用户所拥有的系统权限
+SESSION_PRIVS: 当前用户所拥有的全部权限
+ROLE_SYS_PRIVS: 某个角色所拥有的系统权限
+注意: 要以SYS用户登陆查询这个视图,否则返回空.
+ROLE_ROLE_PRIVS: 当前角色被赋予的角色
+SESSION_ROLES: 当前用户被激活的角色
+USER_ROLE_PRIVS: 当前用户被授予的角色
+另外更有针对表的访问权限的视图:
+TABLE_PRIVILEGES
+ALL_TAB_PRIVS
+ROLE_TAB_PRIVS:某个角色被赋予的相关表的权限
+2.2.4   Examples
+1.查询当前用户所拥有的权限
+Select * from session_privs;
+2.查询某个用户被赋予的系统权限.
+能够有多种方式
+Select * from user_sys_privs;
+或: select * from DBA_SYS_PRIVS where grantee='XXX'
+(需要当前用户拥有DBA角色)
+3. 查询当前用户被授予的角色:
+1).Select * from SESSION_ROLES order by ROLE
+说明: 这个查询会返回当前用户所被授予的全部角色, 其中包括嵌套授权的角色. 例如将DBA角色授予了一个用户,DBA角色已被授予的角色(例如 exp_full_database 和 imp_full_database) 也会被查询出来.
+2). Select * from USER_ROLE_PRIVS
+4. 查询某一角色被赋予的系统权限
+Select Privilege from ROLE_SYS_PRIVS where ROLE=&Role
+5. 查询当前角色被授予的角色
+Select GRANTED_ROLE from ROLE_ROLE_PRIVS where ROLE=&ROLE
+说明: PLUSTRACE这个角色是用于执行SQL AUTO TRACE的, 通过执行$ORACLE_HOME/sqlplus/admin/plustrce.sql能够生成这个角色
