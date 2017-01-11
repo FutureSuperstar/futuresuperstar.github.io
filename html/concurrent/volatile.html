@@ -95,11 +95,12 @@
                 </pre>
                 <p>
                                                 如果A线程执行write方法后，B线程执行read方法。根据happens-before原则和volatile的内存语义，这个过程会有以下几个happens-before关系：<br>
-                   1）1 happens-before 2；3 happens-before 4<br>
+                   1） 1 happens-before 2；3 happens-before 4<br>
                    2） 2 happens-before 3（happens-before的第三条）<br>
                    3） 1 happens-before 4（happens-before的传递性）                
                 </p>
                 <p>
+                                            可以被写入 volatile 变量的这些有效值应该独立于任何其它变量，包括变量自己。
                                                  为了防止指令重排，volatile在虚拟机中实现是依赖于内存屏障的，即在volatile变量的读写前后都会插入内存屏障，禁止对其重排序。另外提一点是，本文所说的volatile指的JDK5及之后的，在之前并没有限制
                                          volatile变量和普通变量的重排。
                 </p>
