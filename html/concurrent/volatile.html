@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset='utf-8'>
+<meta http-equiv="X-UA-Compatible" content="chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="author" content="xyan" />
+<meta name="keywords" content="个人博客,github博客,wangming,王明" />
+<meta name="description" content="王明在github上搭建个的个人博客" />
+<title>我对volatile的理解--Blog by FutureSuperstar</title>
+<link rel="shortcut icon" type="image/x-icon" href="https://futuresuperstar.github.io/images/ico/18.ico" />
+<link href='https://fonts.googleapis.com/css?family=Galdeano' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Electrolize' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Cuprum' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="../css/style.css" media="screen"/>
+<!--[if lt IE 9]>
+<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+<style type="text/css">
+.main-content p{text-indent: 2em;}
+.main-content p small{color:#888;}
+</style>
+</head>
+<body>
+<div class="container">
+    <div role="main">
+        <header>
+            <h1>我对volatile的理解</h1>
+        </header>
+        <nav>
+            <span><a title="首页"  href="https://futuresuperstar.github.io">首页</a></span> 
+            <span><a title="分类"  href="https://futuresuperstar.github.io/html/categories">分类</a></span> 
+            <span><a title="标签"  href="https://futuresuperstar.github.io/html/tags">标签</a></span> 
+            <span><a title="留言"  href="https://futuresuperstar.github.io/html/visit">留言</a></span> 
+            <span><a title="关于我" href="https://futuresuperstar.github.io/html/about">关于</a></span>
+        </nav>
+        <article class="content">
+            <section class="meta">
+                <span class="time">
+                    <time datetime="2017-01-11">2017-01-11</time>
+                </span>
+                 | 
+                <span class="categories">
+                                                 分类：<a href="https://futuresuperstar.github.io/html/categories/index.html#thred" title="thred">多线程</a>&nbsp;
+                </span>
+                 | 
+                <span class="tags">
+                                                  标签：<a href="https://futuresuperstar.github.io/html/tags/index.html#Concurrent" title="并发">Concurrent</a>&nbsp;
+                </span>
+            </section>
+            <section id="main-content" class="main-content">
+                <div class="preStatement">写在前面的话：
+                    <small> 
+			                        今天去面试了，结果不是理想，却也在我料想中。今天主要被问到的问题很多都是多线程，并发，分布式和集群相关的。这些问题我没几个能回答的深入，很多都是简单的了解，因此我回来后就有了下面
+			                        这一系列的文章，主要的关注点就是这几个了。
+                    </small>
+                </div>
+                <p>volatile是轻量级的synchronized，他在多线程的环境中保证了共享变量的内存可见性。可见性指的是当一个线程修改了一个共享变量以后，另一个线程可以读取修改以后的值。
+                volatile相比于synchronized的轻量级在于它不依赖锁，并没有线程上下文切换的概念。
+                                            在这里顺带提一下java中的CAS（Compare AND Swap）的概念：
+                                                假设一个变量的内存值是V，旧的预期值（就是还没有刷入内存的）是A，要修改的值B，当且仅当A和V相同的时候才能将内存值V改成B，否则什么都不做。这个CAS是原子的。关于CAS实现原子操作的几个问题后面再分析。</p>
+                <p>在介绍volatile之前再说一下java中一个重要的规则，happens-before规则：
+                    <ul><li>一个线程中的每个操作happens-before于该线程中的任意后续操作。</li>
+                        <li>对一个对象的解锁，happens-before于随后对这个锁的枷锁。</li>
+                        <li>对一个volatile变量的写，happens-before于任意后续对这个变量的读</li>
+                        <li>如果A happens-before于 B，且 B happens-before于 C，那么 A happens-before于 C</li>
+                    </ul>
+                    <small class="text-red">
+                        happens-before要求的是一种可见性，并不保证发生的顺序。有点类似于数学上的偏序关系。
+                    </small>
+                </p>
+                <p>
+                    volatile变量读写在内存中有如下的语义：<br>
+                                                        读：<span class="text-red">读取一个volatile变量时，JVM会先把这个在当前线程中的本地内存值设为失效，然后从主内存中去读取共享变量。</span><br>
+                                                        写：<span class="text-red">写一个volatile变量时，JVM会立即把当前线程中的值刷入主内存中。</span>                                   
+                </p>
+                <p>下面看一个例子：</p>
+                <pre>
+                  <code class="java">
+  public class Demo{
+    int a=0;
+    volatile int b=0;
+    public void write(){
+        a=1;                    //1
+        b=1;                    //2
+    }
+    public void read(){
+        if(b==0){               //3
+            int x=a;            //4
+        }
+    }
+  }
+                  </code>
+                </pre>
+                <p>
+                                                如果A线程执行write方法后，B线程执行read方法。根据happens-before原则和volatile的内存语义，这个过程会有以下几个happens-before关系：
+                   1）1 happens-before 2；3 happens-before 4
+                   2） 2 happens-before 3（happens-before的第三条）
+                   3） 1 happens-before 4（happens-before的传递性）                            
+                </p>
+                <p>
+                                                 为了防止指令重排，volatile在虚拟机中实现是依赖于内存屏障的，即在volatile变量的读写前后都会插入内存屏障，禁止对其重排序。另外提一点是，本文所说的volatile指的JDK5及之后的，在之前并没有限制
+                                         volatile变量和普通变量的重排。
+                </p>
+                <div>
+                    <ul>
+                        <li>参考文献：</li>
+                        <li>【java并发编程的艺术】[第三章：java内存模型]</li>
+                        <li><a href="http://www.ibm.com/developerworks/cn/java/j-jtp06197.html">Java 理论与实践: 正确使用 Volatile 变量</a></li>
+                    </ul>
+                </div>
+            </section>
+            <aside id="sidebar">
+                <h2><p>个人档案</p></h2>
+                <p class="fn">姓名：王明</p>
+                <p class="nickname">网名：xyan | 淡泊</p>
+                <p>邮箱：<a style="color:#2879d0" href="mailto:wangming1255@aliyun.com">wangming1255@aliyun.com</a></p>
+                <p>QQ：1255321142</p>
+                <p class="address">现居：上海市&mdash;虹口区</p>
+                <p class="role">职业：网站设计、网站制作</p>
+            </aside>
+            <div class="clearfix"></div>
+        </article>
+    </div>
+</div>
+<section class="relative">
+    <br/>
+    <span>
+    <a  href="https://futuresuperstar.github.io/html/doublecheck" class="pagePre"  >上一篇：双重检查</a>
+        &nbsp;&nbsp;&nbsp;
+    <a   class="pageNext disable"  >下一篇：无</a>
+    </span>
+</section>
+<!-- 多说评论框 start -->
+<div class="ds-thread"
+    data-thread-key="https://futuresuperstar.github.io/html/doublecheck"
+         data-title="双重检查--Blog by FutureSuperstar"
+    data-url="https://futuresuperstar.github.io/html/doublecheck"></div>
+<!-- 多说评论框 end -->
+<!-- 公共JS代码  -->
+<script type="text/javascript" src="../js/main.js"></script>
+<link href="https://cdn.bootcss.com/highlight.js/8.0/styles/monokai_sublime.min.css" rel="stylesheet">  
+<script src="https://cdn.bootcss.com/highlight.js/8.0/highlight.min.js"></script>  
+<script type="text/javascript">hljs.initHighlightingOnLoad();</script> 
+</body>
+</html>
