@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset='utf-8'>
+<meta http-equiv="X-UA-Compatible" content="chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="author" content="xyan" />
+<meta name="keywords" content="个人博客,github博客,wangming,王明" />
+<meta name="description" content="王明在github上搭建个的个人博客" />
+<title>IO流介绍--Blog by FutureSuperstar</title>
+<link rel="shortcut icon" type="image/x-icon" href="https://futuresuperstar.github.io/images/ico/18.ico" />
+<link href='https://fonts.googleapis.com/css?family=Galdeano' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Electrolize' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Cuprum' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="../css/style.css" media="screen"/>
+<!--[if lt IE 9]>
+<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+<style type="text/css">
+.main-content p{text-indent: 2em;}
+.main-content p small{color:#888;}
+</style>
+</head>
+<body>
+<div class="container">
+    <div role="main">
+        <header>
+            <h1>IO流介绍</h1>
+        </header>
+        <nav>
+            <span><a title="首页"  href="https://futuresuperstar.github.io">首页</a></span> 
+            <span><a title="分类"  href="https://futuresuperstar.github.io/html/categories">分类</a></span> 
+            <span><a title="标签"  href="https://futuresuperstar.github.io/html/tags">标签</a></span> 
+            <span><a title="留言"  href="https://futuresuperstar.github.io/html/visit">留言</a></span> 
+            <span><a title="关于我" href="https://futuresuperstar.github.io/html/about">关于</a></span>
+        </nav>
+        <article class="content">
+            <section class="meta">
+                <span class="time">
+                    <time datetime="2017-01-15">2017-01-15</time>
+                </span>
+                 | 
+                <span class="categories">
+                  分类：<a href="https://futuresuperstar.github.io/html/categories/index.html#sundry" title="杂谈">sundry</a>&nbsp;
+                </span>
+                 | 
+                <span class="tags">
+                  标签：<a href="https://futuresuperstar.github.io/html/tags/index.html#io" title="IO">IO</a>&nbsp;
+                </span>
+            </section>
+            <section id="main-content" class="main-content">
+                <p>io流是java中的一个基础知识，在任何系统中都是必不可少的。IO流在系统中一般都是核心的地位，很多时候也是系统的瓶颈。
+                java中的IO流经历了三个阶段，首先是阻塞的同步IO，然后非阻塞的同步NIO，再到非阻塞的异步NIO2。</p>
+                <p>关于阻塞和非阻塞，同步和异步的区别有时候很难弄懂，但是其实也简单，如果我们真的明白IO的过程。IO分为两步，发起IO，真正的IO操作。阻塞与非阻塞强调在前一面的一步，同步与异步的区别在后一步。
+                                        再说的明白一点，阻塞与非阻塞就是是不是要等待结果，同步与异步就是要不要自己去做。下面用具体的代码来说明这三种IO。</p>
+            </section>
+            <aside id="sidebar">
+                <h2><p>个人档案</p></h2>
+                <p class="fn">姓名：王明</p>
+                <p class="nickname">网名：xyan | 淡泊</p>
+                <p>邮箱：<a style="color:#2879d0" href="mailto:wangming1255@aliyun.com">wangming1255@aliyun.com</a></p>
+                <p>QQ：1255321142</p>
+                <p class="address">现居：上海市&mdash;虹口区</p>
+                <p class="role">职业：网站设计、网站制作</p>
+            </aside>
+            <div class="clearfix"></div>
+        </article>
+    </div>
+</div>
+<section class="relative">
+    <br/>
+    <span>
+    <a  href="https://futuresuperstar.github.io/html/negativepositivelock" class="pagePre"  >上一篇：悲观锁和乐观锁</a>
+        &nbsp;&nbsp;&nbsp;
+    <a   class="pageNext disable"  >下一篇：无</a>
+    </span>
+</section>
+<!-- 多说评论框 start -->
+<div class="ds-thread"
+    data-thread-key="https://futuresuperstar.github.io/html/ioIntroduce"
+         data-title="双重检查--Blog by FutureSuperstar"
+    data-url="https://futuresuperstar.github.io/html/ioIntroduce"></div>
+<!-- 多说评论框 end -->
+<!-- 公共JS代码  -->
+<script type="text/javascript" src="../js/main.js"></script>
+<link href="https://cdn.bootcss.com/highlight.js/8.0/styles/monokai_sublime.min.css" rel="stylesheet">  
+<script src="https://cdn.bootcss.com/highlight.js/8.0/highlight.min.js"></script>  
+<script type="text/javascript">hljs.initHighlightingOnLoad();</script> 
+</body>
+</html>
