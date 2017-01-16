@@ -54,6 +54,419 @@
                 java中的IO流经历了三个阶段，首先是阻塞的同步IO，然后非阻塞的同步NIO，再到非阻塞的异步NIO2。</p>
                 <p>关于阻塞和非阻塞，同步和异步的区别有时候很难弄懂，但是其实也简单，如果我们真的明白IO的过程。IO分为两步，发起IO，真正的IO操作。阻塞与非阻塞强调在前一面的一步，同步与异步的区别在后一步。
                                         再说的明白一点，阻塞与非阻塞就是是不是要等待结果，同步与异步就是要不要自己去做。下面用具体的代码来说明这三种IO。</p>
+                <p>第一种同步阻塞IO：</p>                       
+                <pre>
+                    <code class="java">
+	public class MyServer {
+	
+	    /**
+	     * @param args
+	     * @throws IOException
+	     */
+	    public static void main(String[] args) throws IOException {
+	        int port = 8080;
+	        if (args != null && args.length > 0) {
+	
+	            try {
+	                port = Integer.valueOf(args[0]);
+	            } catch (NumberFormatException e) {
+	                // 采用默认值
+	            }
+	
+	        }
+	        ServerSocket server = null;
+	        try {
+	            server = new ServerSocket(port);
+	            System.out.println("The  server is start in port : " + port);
+	            Socket socket = null;
+	            while (true) {
+	                socket = server.accept();//(1)
+	                new Thread(new MyServerHandler(socket)).start();//(1)
+	            }
+	        } finally {
+	            if (server != null) {
+	                System.out.println("The  server close");
+	                server.close();
+	                server = null;
+	            }
+	        }
+	    }
+	}
+	               </code>
+	           </pre>
+                <pre>
+                    <code class="java">	
+	public class MyServerHandler implements Runnable {
+	
+	    private Socket socket;
+	
+	    public MyServerHandler(Socket socket) {
+	        this.socket = socket;
+	    }
+	
+	    /*
+	     * (non-Javadoc)
+	     * 
+	     * @see java.lang.Runnable#run()
+	     */
+	    @Override
+	    public void run() {
+	        BufferedReader in = null;
+	        PrintWriter out = null;
+	        try {
+	            in = new BufferedReader(new InputStreamReader(this.socket.getInputStream()));
+	            out = new PrintWriter(this.socket.getOutputStream(), true);
+	            String response = null;
+	            String request = null;
+	            while (true) {
+	                request = in.readLine();
+	                if (request == null)
+	                    break;
+	                System.out.println("The  server received: " + request);
+	                response = "server received"
+	                out.println(response);
+	            }
+	
+	        } catch (Exception e) {
+	            if (in != null) {
+	                try {
+	                    in.close();
+	                } catch (IOException e1) {
+	                    e1.printStackTrace();
+	                }
+	            }
+	            if (out != null) {
+	                out.close();
+	                out = null;
+	            }
+	            if (this.socket != null) {
+	                try {
+	                    this.socket.close();
+	                } catch (IOException e1) {
+	                    e1.printStackTrace();
+	                }
+	                this.socket = null;
+	            }
+	        }
+	    }
+	}
+                    </code>
+                </pre>  
+               <p>请注意(1)和(2)这两行，当没有客户端连接过来时，会一直阻塞在(1)这个地方。当每有一个客户端连接上的时候都会新起一个线程去响应客户端。另外在响应的时候也是程序自己去写socket中写入数据。</p>  
+                 
+                 
+                <p>第二种同步非阻塞IO：</p>                       
+                <pre>
+                    <code class="java">
+    public class MyServer {
+
+	    /**
+	     * @param args
+	     * @throws IOException
+	     */
+	    public static void main(String[] args) throws IOException {
+	        int port = 8080;
+	        if (args != null && args.length > 0) {
+	            try {
+	                port = Integer.valueOf(args[0]);
+	            } catch (NumberFormatException e) {
+	                // 采用默认值
+	            }
+	        }
+	        MyServerHandler handler = new MyServerHandler(port);
+	        new Thread(handler, "NIO-MyServer-001").start();
+	    }
+	}
+                   </code>
+               </pre>
+                <pre>
+                    <code class="java"> 
+    public class MyServerHandler implements Runnable {
+
+	    private Selector selector;
+	
+	    private ServerSocketChannel servChannel;
+	
+	    private volatile boolean stop;
+	
+	    /**
+	     * 初始化多路复用器、绑定监听端口
+	     * 
+	     * @param port
+	     */
+	    public MyServerHandler(int port) {
+	        try {
+	            selector = Selector.open();
+	            servChannel = ServerSocketChannel.open();
+	            servChannel.configureBlocking(false);
+	            servChannel.socket().bind(new InetSocketAddress(port), 1024);
+	            servChannel.register(selector, SelectionKey.OP_ACCEPT);
+	            System.out.println("The  server is start in port : " + port);
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	            System.exit(1);
+	        }
+	    }
+	
+	    public void stop() {
+	        this.stop = true;
+	    }
+	
+	    /*
+	     * (non-Javadoc)
+	     * 
+	     * @see java.lang.Runnable#run()
+	     */
+	    @Override
+	    public void run() {
+	        while (!stop) {
+	            try {
+	                selector.select(1000);//等待
+	                Set&lt;SelectionKey&gt; selectedKeys = selector.selectedKeys();
+	                Iterator&lt;SelectionKey&gt; it = selectedKeys.iterator();
+	                SelectionKey key = null;
+	                while (it.hasNext()) {
+	                    key = it.next();
+	                    it.remove();
+	                    try {
+	                        handleKey(key);
+	                    } catch (Exception e) {
+	                        if (key != null) {
+	                            key.cancel();
+	                            if (key.channel() != null)
+	                                key.channel().close();
+	                        }
+	                    }
+	                }
+	            } catch (Throwable t) {
+	                t.printStackTrace();
+	            }
+	        }
+	
+	        // 多路复用器关闭后，所有注册在上面的Channel和Pipe等资源都会被自动去注册并关闭，所以不需要重复释放资源
+	        if (selector != null)
+	            try {
+	                selector.close();
+	            } catch (IOException e) {
+	                e.printStackTrace();
+	            }
+	    }
+	
+	    private void handleKey(SelectionKey key) throws IOException {
+	
+	        if (key.isValid()) {
+	            // 处理新接入的请求消息
+	            if (key.isAcceptable()) {
+	                // Accept the new connection
+	                ServerSocketChannel ssc = (ServerSocketChannel) key.channel();
+	                SocketChannel sc = ssc.accept();
+	                sc.configureBlocking(false);
+	                // Add the new connection to the selector
+	                sc.register(selector, SelectionKey.OP_READ);
+	            }
+	            if (key.isReadable()) {
+	                // Read the data
+	                SocketChannel sc = (SocketChannel) key.channel();
+	                ByteBuffer readBuffer = ByteBuffer.allocate(1024);
+	                int readBytes = sc.read(readBuffer);
+	                if (readBytes > 0) {
+	                    readBuffer.flip();
+	                    byte[] bytes = new byte[readBuffer.remaining()];
+	                    readBuffer.get(bytes);
+	                    String body = new String(bytes, "UTF-8");
+	                    System.out.println("The  server received: " + body);
+	                    String response = "server received";
+	                    doWrite(sc, response);
+	                } else if (readBytes < 0) {
+	                    // 对端链路关闭
+	                    key.cancel();
+	                    sc.close();
+	                } else
+	                    ; // 读到0字节，忽略
+	            }
+	        }
+	    }
+	
+	    private void doWrite(SocketChannel channel, String response) throws IOException {
+	        if (response != null && response.trim().length() > 0) {
+	            byte[] bytes = response.getBytes();
+	            ByteBuffer writeBuffer = ByteBuffer.allocate(bytes.length);
+	            writeBuffer.put(bytes);
+	            writeBuffer.flip();
+	            channel.write(writeBuffer);
+	        }
+	    }
+	}
+                    </code>
+                </pre>  
+               <p>在NIO里面是同步非阻塞的，不同的是不用在阻塞以等待客户端的连接了，服务端会不断的轮询准备就绪SelectionKey，然后去响应客户端。</p>  
+                  
+                  
+                   <p>第二种同步非阻塞IO：</p>                       
+                <pre>
+                    <code class="java">
+    public class MyServer {
+
+	    /**
+	     * @param args
+	     * @throws IOException
+	     */
+	    public static void main(String[] args) throws IOException {
+		    int port = 8080;
+		    if (args != null && args.length > 0) {
+		        try {
+		           port = Integer.valueOf(args[0]);
+		        } catch (NumberFormatException e) {
+		        // 采用默认值
+		        }
+		    }
+		    AsyncServerHandler serverHandler = new AsyncServerHandler(port);
+		    new Thread(timeServer, "AIO-AsyncServer-001").start();
+	    }
+	}
+                   </code>
+               </pre>
+                <pre>
+                    <code class="java"> 
+    public class AsyncTimeServerHandler implements Runnable {
+
+	    private int port;
+	
+	    CountDownLatch latch;
+	    AsynchronousServerSocketChannel asynchronousServerSocketChannel;
+	
+	    public AsyncTimeServerHandler(int port) {
+		    this.port = port;
+		    try {
+		        asynchronousServerSocketChannel = AsynchronousServerSocketChannel
+		            .open();
+		        asynchronousServerSocketChannel.bind(new InetSocketAddress(port));
+		        System.out.println("The  server is start in port : " + port);
+		    } catch (IOException e) {
+		        e.printStackTrace();
+		    }
+	    }
+	
+	    /*
+	     * (non-Javadoc)
+	     * 
+	     * @see java.lang.Runnable#run()
+	     */
+	    @Override
+	    public void run() {
+	
+		    latch = new CountDownLatch(1);
+		    doAccept();
+		    try {
+		        latch.await();
+		    } catch (InterruptedException e) {
+		        e.printStackTrace();
+		    }
+	    }
+	
+	    public void doAccept() {
+	       asynchronousServerSocketChannel.accept(this,
+	        new AcceptCompletionHandler());
+	    }
+	
+	}
+                    </code>
+                </pre>  
+                <pre>
+                    <code class="java">
+   public class AcceptCompletionHandler implements
+	    CompletionHandler&lt;AsynchronousSocketChannel, AsyncTimeServerHandler&gt; {
+	
+	    @Override
+	    public void completed(AsynchronousSocketChannel result,
+	        AsyncTimeServerHandler attachment) {
+	       attachment.asynchronousServerSocketChannel.accept(attachment, this);
+	       ByteBuffer buffer = ByteBuffer.allocate(1024);
+	       result.read(buffer, buffer, new ReadCompletionHandler(result));
+	    }
+	
+	    @Override
+	    public void failed(Throwable exc, AsyncServerHandler attachment) {
+	       exc.printStackTrace();
+	       attachment.latch.countDown();
+	    }
+	
+	}          
+                    
+                    </code>
+                </pre>
+                <pre>
+                    <code class="java">
+                    
+    public class ReadCompletionHandler implements
+	    CompletionHandler&lt;Integer, ByteBuffer&gt; {
+	
+	    private AsynchronousSocketChannel channel;
+	
+	    public ReadCompletionHandler(AsynchronousSocketChannel channel) {
+	    if (this.channel == null)
+	        this.channel = channel;
+	    }
+	
+	    @Override
+	    public void completed(Integer result, ByteBuffer attachment) {
+		    attachment.flip();
+		    byte[] body = new byte[attachment.remaining()];
+		    attachment.get(body);
+		    try {
+		        String req = new String(body, "UTF-8");
+		        System.out.println("The  server received: " + req);
+		        String response = "server received";
+		        doWrite(response);
+		    } catch (UnsupportedEncodingException e) {
+		        e.printStackTrace();
+		    }
+	    }
+	
+	    private void doWrite(String response) {
+		    if (response != null && response.trim().length() > 0) {
+		        byte[] bytes = (response).getBytes();
+		        ByteBuffer writeBuffer = ByteBuffer.allocate(bytes.length);
+		        writeBuffer.put(bytes);
+		        writeBuffer.flip();
+		        channel.write(writeBuffer, writeBuffer,
+		            new CompletionHandler&lt;Integer, ByteBuffer&gt;() {
+		            @Override
+		            public void completed(Integer result, ByteBuffer buffer) {
+		                // 如果没有发送完成，继续发送
+		                if (buffer.hasRemaining())
+		                channel.write(buffer, buffer, this);
+		            }
+		
+		            @Override
+		            public void failed(Throwable exc, ByteBuffer attachment) {
+		                try {
+		                channel.close();
+		                } catch (IOException e) {
+		                // ingnore on close
+		                }
+		            }
+		         });
+		    }
+	    }
+	
+	    @Override
+	    public void failed(Throwable exc, ByteBuffer attachment) {
+		    try {
+		        this.channel.close();
+		    } catch (IOException e) {
+		        e.printStackTrace();
+		    }
+	    }
+	
+	}
+                    </code>
+                </pre>
+                
+                                
+               <p>在NIO里面是同步非阻塞的，不同的是不用在阻塞以等待客户端的连接了，服务端会不断的轮询准备就绪SelectionKey，然后去响应客户端。</p>
+               
+                         
             </section>
             <aside id="sidebar">
                 <h2><p>个人档案</p></h2>
