@@ -57,99 +57,99 @@
                 <p>第一种同步阻塞IO：</p>                       
                 <pre>
                     <code class="java">
-	public class MyServer {
-	
-	    /**
-	     * @param args
-	     * @throws IOException
-	     */
-	    public static void main(String[] args) throws IOException {
-	        int port = 8080;
-	        if (args != null && args.length > 0) {
-	
-	            try {
-	                port = Integer.valueOf(args[0]);
-	            } catch (NumberFormatException e) {
-	                // 采用默认值
-	            }
-	
-	        }
-	        ServerSocket server = null;
-	        try {
-	            server = new ServerSocket(port);
-	            System.out.println("The  server is start in port : " + port);
-	            Socket socket = null;
-	            while (true) {
-	                socket = server.accept();//(1)
-	                new Thread(new MyServerHandler(socket)).start();//(1)
-	            }
-	        } finally {
-	            if (server != null) {
-	                System.out.println("The  server close");
-	                server.close();
-	                server = null;
-	            }
-	        }
-	    }
-	}
+public class MyServer {
+
+    /**
+     * @param args
+     * @throws IOException
+     */
+    public static void main(String[] args) throws IOException {
+        int port = 8080;
+        if (args != null && args.length > 0) {
+
+            try {
+                port = Integer.valueOf(args[0]);
+            } catch (NumberFormatException e) {
+                // 采用默认值
+            }
+
+        }
+        ServerSocket server = null;
+        try {
+            server = new ServerSocket(port);
+            System.out.println("The  server is start in port : " + port);
+            Socket socket = null;
+            while (true) {
+                socket = server.accept();//(1)
+                new Thread(new MyServerHandler(socket)).start();//(1)
+            }
+        } finally {
+            if (server != null) {
+                System.out.println("The  server close");
+                server.close();
+                server = null;
+            }
+        }
+    }
+}
 	               </code>
 	           </pre>
                 <pre>
                     <code class="java">	
-	public class MyServerHandler implements Runnable {
-	
-	    private Socket socket;
-	
-	    public MyServerHandler(Socket socket) {
-	        this.socket = socket;
-	    }
-	
-	    /*
-	     * (non-Javadoc)
-	     * 
-	     * @see java.lang.Runnable#run()
-	     */
-	    @Override
-	    public void run() {
-	        BufferedReader in = null;
-	        PrintWriter out = null;
-	        try {
-	            in = new BufferedReader(new InputStreamReader(this.socket.getInputStream()));
-	            out = new PrintWriter(this.socket.getOutputStream(), true);
-	            String response = null;
-	            String request = null;
-	            while (true) {
-	                request = in.readLine();
-	                if (request == null)
-	                    break;
-	                System.out.println("The  server received: " + request);
-	                response = "server received"
-	                out.println(response);
-	            }
-	
-	        } catch (Exception e) {
-	            if (in != null) {
-	                try {
-	                    in.close();
-	                } catch (IOException e1) {
-	                    e1.printStackTrace();
-	                }
-	            }
-	            if (out != null) {
-	                out.close();
-	                out = null;
-	            }
-	            if (this.socket != null) {
-	                try {
-	                    this.socket.close();
-	                } catch (IOException e1) {
-	                    e1.printStackTrace();
-	                }
-	                this.socket = null;
-	            }
-	        }
-	    }
-	}
+public class MyServerHandler implements Runnable {
+
+    private Socket socket;
+
+    public MyServerHandler(Socket socket) {
+        this.socket = socket;
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see java.lang.Runnable#run()
+     */
+    @Override
+    public void run() {
+        BufferedReader in = null;
+        PrintWriter out = null;
+        try {
+            in = new BufferedReader(new InputStreamReader(this.socket.getInputStream()));
+            out = new PrintWriter(this.socket.getOutputStream(), true);
+            String response = null;
+            String request = null;
+            while (true) {
+                request = in.readLine();
+                if (request == null)
+                    break;
+                System.out.println("The  server received: " + request);
+                response = "server received"
+                out.println(response);
+            }
+
+        } catch (Exception e) {
+            if (in != null) {
+                try {
+                    in.close();
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+            }
+            if (out != null) {
+                out.close();
+                out = null;
+            }
+            if (this.socket != null) {
+                try {
+                    this.socket.close();
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+                this.socket = null;
+            }
+        }
+    }
+}
                     </code>
                 </pre>  
                <p>请注意(1)和(2)这两行，当没有客户端连接过来时，会一直阻塞在(1)这个地方。当每有一个客户端连接上的时候都会新起一个线程去响应客户端。另外在响应的时候也是程序自己去写socket中写入数据。</p>  
