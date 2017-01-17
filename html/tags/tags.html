@@ -76,6 +76,11 @@ function getPage(pageNum,url){
         cache:true,
         url:"https://futuresuperstar.github.io/js/tags"+url+pageNum+".json",
         dataType:"json",
+        complete:function(XMLHttpRequest,status){
+        	if(XMLHttpRequest.status==404){
+        		alert("没有和这个标签相关的文章！");
+        	}
+        },
         success:function(data){
             if(data!=null&&data.length>=1){
                 var htmls=[];
@@ -93,9 +98,10 @@ function getPage(pageNum,url){
                     }
                 });
                 $("#catalog").empty().append(htmls.join(""));
-            }else{
-            	alert("没有和这个标签相关的文章！");
             }
+        },
+        error:function(){
+        	alert("没有和这个标签相关的文章！");
         }
     });
 }
