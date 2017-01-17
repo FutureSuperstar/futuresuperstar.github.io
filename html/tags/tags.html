@@ -58,7 +58,8 @@
 <script type="text/javascript">
 $(function(){
 	var url = location.search; //获取url中"?"符后的字串
-    getPage(1);
+			console.log(url);
+   // getPage(1);
     $("#paginator a.active").click(function(){
         var pageNum=$(this).text();
         getPage(pageNum);
