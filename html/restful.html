@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset='utf-8'>
+<meta http-equiv="X-UA-Compatible" content="chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="author" content="xyan" />
+<meta name="keywords" content="个人博客,github博客,wangming,王明" />
+<meta name="description" content="王明在github上搭建个的个人博客" />
+<title>我对restful的理解--Blog by FutureSuperstar</title>
+<link rel="shortcut icon" type="image/x-icon" href="https://futuresuperstar.github.io/images/ico/18.ico" />
+<link href='https://fonts.googleapis.com/css?family=Galdeano' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Electrolize' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Cuprum' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="../css/style.css" media="screen"/>
+<!--[if lt IE 9]>
+<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+<style type="text/css">
+.main-content p{text-indent: 2em;}
+.main-content p small{color:#888;}
+</style>
+</head>
+<body>
+<div class="container">
+    <div role="main">
+        <header>
+            <h1>我对restful的理解</h1>
+        </header>
+        <nav>
+            <span><a title="首页"  href="https://futuresuperstar.github.io">首页</a></span> 
+            <span><a title="分类"  href="https://futuresuperstar.github.io/html/categories">分类</a></span> 
+            <span><a title="标签"  href="https://futuresuperstar.github.io/html/tags">标签</a></span> 
+            <span><a title="留言"  href="https://futuresuperstar.github.io/html/visit">留言</a></span> 
+            <span><a title="关于我" href="https://futuresuperstar.github.io/html/about">关于</a></span>
+        </nav>
+        <article class="content">
+            <section class="meta">
+                <span class="time">
+                    <time datetime="2017-01-17">2017-01-17</time>
+                </span>
+                 | 
+                <span class="categories">
+                  分类：<a href="https://futuresuperstar.github.io/html/categories/index.html#framework" title="架构">架构</a>&nbsp;
+                </span>
+                 | 
+                <span class="tags">
+                  标签：<a href="https://futuresuperstar.github.io/html/tags/index.html#restful" title="restful">restful</a>&nbsp;
+                </span>
+            </section>
+            <section id="main-content" class="main-content">
+                <p>restful是最近比较火的一个概念，restful架构有着结构清晰、符合标准、易于理解、扩展方便等诸多的优点，所以正得到越来越多网站的采用。但是，到底什么是RESTful架构，并不是一个容易说清楚的问题。</p>
+                <p>REST这个词，是<a href="https://en.wikipedia.org/wiki/Roy_Fielding" target="_blank">Roy Thomas Fielding</a>在他2000年的博士论文中提出的。
+                REST是Representational State Transfer的缩写，翻译成中文就是具象状态传输。也就是传输具象或者传输其状态。</p>
+                <p>REST 定义了一组体系架构原则，您可以根据这些，包括使用不同语言编写的客户端如何通过 HTTP 处理和传输资源状态。
+                                            在事实上，REST 对 Web的影响非常大，由于其使用相当方便，已经普遍地取代了基于 SOAP 和 WSDL 的接口设计。</p>
+                <p>个人理解：<br>
+			             （一）  REST只是一种规范或者说是风格，不是一种标准。<br>
+			             （二）  REST强调的是资源，包括资源的获取，创建，修改，删除等。<br>
+			             （三）  REST是建立在http的基础上。 <br>                    
+                </p>
+                <p>在http中的方法有：</p>
+                <table>
+                    <thead>
+                        <th>序号</th>
+                        <th>方法</th>
+                        <th>描述</th>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>GET</td>
+                            <td>请求指定的页面信息，并返回实体主体。</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>HEAD</td>
+                            <td>类似于get请求，只不过返回的响应中没有具体的内容，用于获取报头</td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>POST</td>
+                            <td>向指定资源提交数据进行处理请求（例如提交表单或者上传文件）。数据被包含在请求体中。POST请求可能会导致新的资源的建立和/或已有资源的修改。</td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td>PUT</td>
+                            <td>从客户端向服务器传送的数据取代指定的文档的内容。</td>
+                        </tr>
+                        <tr>
+                            <td>5</td>
+                            <td>DELETE</td>
+                            <td>请求服务器删除指定的页面。</td>
+                        </tr>
+                        <tr>
+                            <td>6</td>
+                            <td>CONNECT</td>
+                            <td>HTTP/1.1协议中预留给能够将连接改为管道方式的代理服务器。</td>
+                        </tr>
+                        <tr>
+                            <td>7</td>
+                            <td>OPTIONS</td>
+                            <td>允许客户端查看服务器的性能。</td>
+                        </tr>
+                        <tr>
+                            <td>8</td>
+                            <td>TRACE</td>
+                            <td>回显服务器收到的请求，主要用于测试或诊断。</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p>当然了在表单中就只有get和post了。在rest中常用的方法有四个get、post、delete、put。这几个方法中有既安全也是幂等的，也有不都不具备的。</p>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>方法</th>
+                            <th>安全性</th>
+                            <th>幂等性</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>GET</td>
+                            <td>√</td>
+                            <td>√</td>
+                        </tr>
+                        <tr>
+                            <td>POST</td>
+                            <td>×</td>
+                            <td>×</td>
+                        </tr>
+                        <tr>
+                            <td>PUT</td>
+                            <td>×</td>
+                            <td>√</td>
+                        </tr>
+                        <tr>
+                            <td>DELETE</td>
+                            <td>×</td>
+                            <td>√</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p>怕有小伙伴不明白这里说的安全性和幂等性，所以再解释一下：<br>
+                                                 安全性 ：不会改变资源状态，可以理解为只读的；<br>
+                                                 幂等性 ：执行1次和执行N次，对资源状态改变的效果是等价的。<br>
+                </p>
+                <p>综合上面的解释，我们总结一下什么是RESTful架构：<br>
+				　　（1）每一个URL代表一种资源；<br>
+				　　（2）客户端和服务器之间，传递这种资源的某种表现；<br>
+				　　（3）客户端通过上面的四个HTTP动词，对服务器端资源进行操作，实现"具象状态传输"。<br>
+				</p>
+				<p>
+				最后说一下restful的规范。总结起来有以下几点；
+					<dl>
+					   <dt>在URL中体现资源，而非动作</dt>
+					   <dd>就是说在url中只有名词，动词用http的四个方法来体现。</dd>
+					   <dt>版本号</dt>
+					   <dd>关于这点目前有两种做法，一是把版本号放到url中体现，另一种是方法是放到header中。</dd>
+					   <dt>返回值</dt>
+					   <dd>建议返回json的数据格式，便于跨平台，且数据量更小，另外javascript也可以解析。一般json格式类似于：
+					       <blockquote>{
+							  'code' : 0,
+							  'data' : {
+							      'userId' : 1,
+							      'userName' : 'xiaomin'
+							              },
+							  'serverTime': 14939939
+							}</blockquote>
+					   </dd>
+					   <dt>权限控制</dt>
+					   <dd>目前建议是给客户端一个token，并且放在header中识别。</dd>
+					</dl>
+				</p>
+                <div>
+                    <ul>
+                        <li>参考文献：</li>
+                        <li><a href="http://www.runoob.com/http/http-methods.html" target="_blank">http://www.runoob.com/http/http-methods.html</a></li>
+                        <li><a href="http://www.ics.uci.edu/~fielding/pubs/dissertation/top.htm" target="_blank">http://www.ics.uci.edu/~fielding/pubs/dissertation/top.htm</a></li>
+                    </ul>
+                </div>
+            </section>
+            <aside id="sidebar">
+                <h2><p>个人档案</p></h2>
+                <p class="fn">姓名：王明</p>
+                <p class="nickname">网名：xyan | 淡泊</p>
+                <p>邮箱：<a style="color:#2879d0" href="mailto:wangming1255@aliyun.com">wangming1255@aliyun.com</a></p>
+                <p>QQ：1255321142</p>
+                <p class="address">现居：上海市&mdash;虹口区</p>
+                <p class="role">职业：网站设计、网站制作</p>
+            </aside>
+            <div class="clearfix"></div>
+        </article>
+    </div>
+</div>
+<section class="relative">
+    <br/>
+    <span>
+    <a  href="https://futuresuperstar.github.io/html/negativepositivelock" class="pagePre"  >上一篇：悲观锁和乐观锁</a>
+        &nbsp;&nbsp;&nbsp;
+    <a   class="pageNext disable"  >下一篇：无</a>
+    </span>
+</section>
+<!-- 多说评论框 start -->
+<div class="ds-thread"
+    data-thread-key="https://futuresuperstar.github.io/html/restful"
+         data-title="我对restful的理解--Blog by FutureSuperstar"
+    data-url="https://futuresuperstar.github.io/html/restful"></div>
+<!-- 多说评论框 end -->
+<!-- 公共JS代码  -->
+<script type="text/javascript" src="../js/main.js"></script>
+</body>
+</html>
