@@ -78,7 +78,8 @@ function getPage(pageNum,url){
         dataType:"json",
         complete:function(XMLHttpRequest,status){
         	if(XMLHttpRequest.status==404){
-        		alert("没有和这个标签相关的文章！");
+        		//alert("没有和这个标签相关的文章！");
+        		location.href="https://futuresuperstar.github.io";
         	}
         },
         success:function(data){
