@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset='utf-8'>
+<meta http-equiv="X-UA-Compatible" content="chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="author" content="xyan" />
+<meta name="keywords" content="个人博客,github博客,wangming,王明" />
+<meta name="description" content="王明在github上搭建个的个人博客" />
+<title>Blog by FutureSuperstar</title>
+<link rel="shortcut icon" type="image/x-icon" href="https://futuresuperstar.github.io/images/ico/18.ico" />
+<link href='https://fonts.googleapis.com/css?family=Galdeano' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Electrolize' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Cuprum' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="css/style.css" media="screen"/>
+<!--[if lt IE 9]>
+<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+</head>
+<body>
+<div class="container">
+    <div role="main">
+        <header>
+            <h1>FutureSuperstar</h1>
+        </header>
+        <nav>
+            <span><a title="首页"  href="https://futuresuperstar.github.io">首页</a></span> 
+            <span><a title="分类"  href="https://futuresuperstar.github.io/html/categories">分类</a></span> 
+            <span><a title="标签"  href="https://futuresuperstar.github.io/html/tags">标签</a></span> 
+            <span><a title="留言"  href="https://futuresuperstar.github.io/html/visit">留言</a></span> 
+            <span><a title="关于我" href="https://futuresuperstar.github.io/html/about">关于</a></span>
+            <span><a title="订阅"  href="https://futuresuperstar.github.io/feed">订阅</a></span>
+        </nav>
+        <article class="content">
+            <section class="main-content">
+                <ul class="catalog" id="catalog">
+                </ul>
+                <div class="paginator" id="paginator">
+                    <a class="current-page">1</a>
+                    <!-- <a class="active">2</a> -->
+                    (共<span id="countNum">7</span>篇)
+                </div>
+            </section>
+            <aside id="sidebar">
+                <h2><p>个人档案</p></h2>
+                <p class="fn">姓名：王明</p>
+                <p class="nickname">网名：xyan | 淡泊</p>
+                <p>邮箱：<a style="color:#2879d0" href="mailto:wangming1255@aliyun.com">wangming1255@aliyun.com</a></p>
+                <p>QQ：1255321142</p>
+                <p class="address">现居：上海市&mdash;虹口区</p>
+                <p class="role">职业：网站设计、网站制作</p>
+            </aside>
+        </article>
+    </div>
+</div>
+<script type="text/javascript" src="https://cdn.bootcss.com/jquery/1.12.4/jquery.js"></script>
+<script type="text/javascript">
+$(function(){
+	var url = location.search; //获取url中"?"符后的字串
+    getPage(1);
+    $("#paginator a.active").click(function(){
+        var pageNum=$(this).text();
+        getPage(pageNum);
+    });
+});
+
+function getPage(pageNum){
+    $.ajax({
+        cache:true,
+        url:"https://futuresuperstar.github.io/js/tags"+pageNum+".json",
+        dataType:"json",
+        success:function(data){
+            if(data!=null&&data.length>=1){
+                var htmls=[];
+                $.each(data,function(i,o){
+                    if(!!o.datetime){//
+                        htmls.push('<li class="catalog-item">');
+                        htmls.push('<time datetime="'+o.datetime+'">'+o.datetime+'</time>');
+                        htmls.push('<a href="'+o.href+'" title="'+o.text+'">'+o.text+'</a>');
+                        if(!o.original){
+                            htmls.push('<small class="status-tag reprint">转</small>');
+                        }
+                        htmls.push('</li>');
+                    }else{
+                        htmls.push('<li class="catalog-seperator">'+o.text+'</li>');
+                    }
+                });
+                $("#catalog").empty().append(htmls.join(""));
+            }
+        }
+    });
+}
+</script>
+</body>
+</html>
