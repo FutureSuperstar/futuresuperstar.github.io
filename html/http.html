@@ -371,8 +371,6 @@
 				<p>客户端对于每一个realm，通过提供用户名和密码来进行认证的方式。</p>
 				<p>包含密码的明文传递。</p>
 				<p>当浏览器访问使用基本认证的网站的时候， 浏览器会提示你输入用户名和密码。</p>
-
-
 				<p>基本认证步骤：</p>
 				<p>1、客户端访问一个受http基本认证保护的资源。</p>
 				<p>2、服务器返回401状态，要求客户端提供用户名和密码进行认证。（验证失败的时候，响应头会加上WWW-Authenticate: Basic realm="请求域"。）</p>
@@ -449,7 +447,7 @@
 				</blockquote>
 				<p>HTTP OAuth认证</p>
 				<p>OAuth对于Http来说，就是放在Authorization header中的不是用户名密码， 而是一个token。微软的Skydrive就是使用这样的方式。</p>
-				<p>12.2、摘要认证 digest authentication（HTTP1.1提出的基本认证的替代方法）</p>
+				<p>8.2、摘要认证 digest authentication（HTTP1.1提出的基本认证的替代方法）</p>
 				<p>这个认证可以看做是基本认证的增强版本，不包含密码的明文传递。</p>
 				<p>引入了一系列安全增强的选项；“保护质量”(qop)、随机数计数器由客户端增加、以及客户生成的随机数。</p>
 				<p>在HTTP摘要认证中使用 MD5 加密是为了达成"不可逆的"，也就是说，当输出已知的时候，确定原始的输入应该是相当困难的。如果密码本身太过简单，也许可以 </p>
@@ -479,22 +477,25 @@
 					                        opaque="5ccc069c403ebaf9f0171e9517f40e41"</p>
 					<p>Content-Type: text/html</p>
 					<p>Content-Length: 311</p>
-					
-					<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-					 "http://www.w3.org/TR/1999/REC-html401-19991224/loose.dtd">
-					<HTML>
-					  <HEAD>
-					    <TITLE>Error</TITLE>
-					    <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=ISO-8859-1">
-					  </HEAD>
-					  <BODY><H1>401 Unauthorized.</H1></BODY>
-					</HTML>
-					复制代码
-					复制代码
-					客户端请求 (用户名 "Mufasa", 密码 "Circle Of Life")：
-					GET /dir/index.html HTTP/1.0
-					Host: localhost
-					Authorization: Digest username="Mufasa",
+					<pre>
+						<code>
+&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+ "http://www.w3.org/TR/1999/REC-html401-19991224/loose.dtd"&gt;
+&lt;HTML&gt;
+  &lt;HEAD&gt;
+    &lt;TITLE&gt;Error&lt;/TITLE&gt;
+    &lt;META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=ISO-8859-1"&gt;
+  &lt;/HEAD&gt;
+  &lt;BODY&gt;&lt;H1&gt;401 Unauthorized.&lt;/H1&gt;&lt;/BODY&gt;
+&lt;/HTML&gt;
+						</code>
+					</pre>
+				</blockquote>
+				<blockquote>
+					<p>客户端请求 (用户名 "Mufasa", 密码 "Circle Of Life")：</p>
+					<p>GET /dir/index.html HTTP/1.0</p>
+					<p>Host: localhost</p>
+					<p>Authorization: Digest username="Mufasa",
 					                     realm="testrealm@host.com",
 					                     nonce="dcd98b7102dd2f0e8b11d0f600bfb0c093",
 					                     uri="/dir/index.html",
@@ -502,27 +503,63 @@
 					                     nc=00000001,    //请求计数
 					                     cnonce="0a4f113b",   //客户端密码随机数
 					                     response="6629fae49393a05397450978507c4ef1",
-					                     opaque="5ccc069c403ebaf9f0171e9517f40e41"
-					(跟随一个新行，形式如前所述)。
-					复制代码
-					复制代码
-					服务器响应：
-					HTTP/1.0 200 OK
-					Server: HTTPd/0.9
-					Date: Sun, 10 Apr 2005 20:27:03 GMT
-					Content-Type: text/html
-					Content-Length: 7984
-					(随后是一个空行，然后是所请求受限制的HTML页面)
+					                     opaque="5ccc069c403ebaf9f0171e9517f40e41"</p>
+					<p>(跟随一个新行，形式如前所述)。</p>
+				</blockquote>
+				<blockquote>
+					<p>服务器响应：</p>
+					<p>HTTP/1.0 200 OK</p>
+					<p>Server: HTTPd/0.9</p>
+					<p>Date: Sun, 10 Apr 2005 20:27:03 GMT</p>
+					<p>Content-Type: text/html</p>
+					<p>Content-Length: 7984</p>
+					<p>(随后是一个空行，然后是所请求受限制的HTML页面)</p>
+				<blockquote>
+				<p>response 值由三步计算而成。当多个数值合并的时候，使用冒号作为分割符：</p>
+				<p>1、对用户名、认证域(realm)以及密码的合并值计算 MD5 哈希值，结果称为 HA1。</p>
+				<p>2、对HTTP方法以及URI的摘要的合并值计算 MD5 哈希值，例如，"GET" 和 "/dir/index.html"，结果称为 HA2。</p>
+				<p>3、对HA1、服务器密码随机数(nonce)、请求计数(nc)、客户端密码随机数(cnonce)、保护质量(qop)以及 HA2 的合并值计算 MD5 哈希值。结果即为客户端提供的response 值。</p>
+				<p>因为服务器拥有与客户端同样的信息，因此服务器可以进行同样的计算，以验证客户端提交的 response 值的正确性。在上面给出的例子中，结果是如下计算的。 </p>
+				（MD5()表示用于计算MD5哈希值的函数；“\”表示接下一行；引号并不参与计算）</p>
+				<p>HA1 = MD5( "Mufasa:testrealm@host.com:Circle Of Life" )
+				       = 939e7578ed9e3c518a452acee763bce9</p>
+				
+				<p>HA2 = MD5( "GET:/dir/index.html" )
+				       = 39aff3a2bab6126f332b942af96d3366</p>
+				
+				<p>Response = MD5( "939e7578ed9e3c518a452acee763bce9:\
+				                         dcd98b7102dd2f0e8b11d0f600bfb0c093:\
+				00000001:0a4f113b:auth:\
+				39aff3a2bab6126f332b942af96d3366" )
+				= 6629fae49393a05397450978507c4ef1</p>
+				
+				<p>此时客户端可以提交一个新的请求，重复使用服务器密码随机数(nonce)（服务器仅在每次“401”响应后发行新的nonce），但是提供新的客户端密码随机数(cnonce)。
+					在后续的请求中，十六进制请求计数器(nc)必须比前一次使用的时候要大，否则攻击者可以简单的使用同样的认证信息重放老的请求。由服务器来确保在每个发出的密码随机数nonce时，
+					计数器是在增加的，并拒绝掉任何错误的请求。显然，改变HTTP方法和/或计数器数值都会导致不同的 response值。</p>
+				<p>服务器应当记住最近所生成的服务器密码随机数nonce的值。也可以在发行每一个密码随机数nonce后，记住过一段时间让它们过期。如果客户端使用了一个过期的值，服务器应该响应“401”状态号，
+					并且在认证头中添加stale=TRUE，表明客户端应当使用新提供的服务器密码随机数nonce重发请求，而不必提示用户其它用户名和口令。</p>
+				
+				<p>服务器不需要保存任何过期的密码随机数，它可以简单的认为所有不认识的数值都是过期的。服务器也可以只允许每一个服务器密码随机数nonce使用一次，当然，
+					这样就会迫使客户端在发送每个请求的时候重复认证过程。需要注意的是，在生成后立刻过期服务器密码随机数nonce是不行的，因为客户端将没有任何机会来使用这个nonce。</p>
+				<p>PS：以上只介绍了两种比较基础的，还有其他的一些认证方式就不在这里一一说明了。</p>
 
 
+				<h3>九、HTTPS传输协议原理</h3>
+				<p>HTTPS（全称：Hypertext Transfer Protocol over Secure Socket Layer），是以安全为目标的HTTP通道，简单讲是HTTP的安全版。
+					即HTTP下加入SSL层，HTTPS的安全基础是SSL，因此加密的详细内容请看SSL。</p>
+				
+				<p>9.1、两种基本的加解密算法类型
+				<p>对称加密：密钥只有一个，加密解密为同一个密码，且加解密速度快，典型的对称加密算法有DES、AES等。</p>
+				<p>非对称加密：密钥成对出现（且根据公钥无法推知私钥，根据私钥也无法推知公钥），加密解密使用不同密钥（公钥加密需要私钥解密，私钥加密需要公钥解密），相对对称加密速度较慢，典型的非对称加密算法有RSA、DSA等。</p>
+				
+				<p>9.2、HTTPS通信过程</p>
+				<p><img alt="HTTPS通信过程" src="https://futuresuperstar.github.io/images/https.png"></p>
+				<p>9.3、HTTPS通信的优点</p>
+				<p>客户端产生的密钥只有客户端和服务器端能得到；</p>
+				<p>加密的数据只有客户端和服务器端才能得到明文；</p>
+				<p>客户端到服务端的通信是安全的。</p>
 
-
-
-
-
-
-
-				<h3>十四、http的状态响应码</h3>
+				<h3>十、http的状态响应码</h3>
 				<p>1**(信息类)：表示接收到请求并且继续处理</p>
 				<p>100——客户必须继续发出请求</p>
 				<p>101——客户要求服务器根据请求转换HTTP协议版本</p>
