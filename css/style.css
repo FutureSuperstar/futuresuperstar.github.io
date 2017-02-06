@@ -8,8 +8,7 @@ p{padding:.5em 0;}
 li{padding:.2em 0;}
 ol,ul{list-style-position:inside;}
 ol ul, ul ol, ul ul, ol ol {margin-left:1em;}
-blockquote{display:block;text-align:justify;border-left:4px solid #eeeeee;}
-blockquote{margin:1em 0em;padding-left:1.5em;}
+blockquote{display:block;text-align:justify;border-left:4px solid #eeeeee;margin:1em 0em;padding-left:1.5em;background-color: #f5f5f5}
 blockquote p{margin:0;padding:.5em 0;}
 .container{width:900px;margin:2em auto;display:block;padding:0 2em;}
 .container:after,.relative:after{clear: both;display: block;height: 0;width: 0;zoom:1;overflow: hidden;}
