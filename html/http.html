@@ -418,47 +418,101 @@
 					<p>Content-Length: 311</p>
 					<pre>
 						<code>
-							<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-							 "http://www.w3.org/TR/1999/REC-html401-19991224/loose.dtd">
-							<HTML>
-							  <HEAD>
-							    <TITLE>Error</TITLE>
-							    <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=ISO-8859-1">
-							  </HEAD>
-							  <BODY><H1>401 Unauthorized.</H1></BODY>
-							</HTML>
+						&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+						 "http://www.w3.org/TR/1999/REC-html401-19991224/loose.dtd"&gt;
+						&lt;HTML&gt;
+						  &lt;HEAD&gt;
+						    &lt;TITLE&gt;Error&lt;/TITLE&gt;
+						    &lt;META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=ISO-8859-1"&gt;
+						  &lt;/HEAD&gt;
+						  &lt;BODY&gt;&lt;H1&gt;401 Unauthorized.&lt;/H1&gt;&lt;/BODY&gt;
+						&lt;/HTML&gt;
 						</code>
 					</pre>
 				</blockquote>
 
 				<blockquote>
-				客户端的请求（用户名“"Aladdin”，口令, password “open sesame”）：
-				GET /private/index.html HTTP/1.0
-				Host: localhost
-				Authorization: Basic QWxhZGRpbjpvcGVuIHNlc2FtZQ==
-				（跟随一个空行，如上所述）
+					<p>客户端的请求（用户名“"Aladdin”，口令, password “open sesame”）：</p>
+					<p>GET /private/index.html HTTP/1.0</p>
+					<p>Host: localhost</p>
+					<p>Authorization: Basic QWxhZGRpbjpvcGVuIHNlc2FtZQ==</p>
+					<p>（跟随一个空行，如上所述）</p>
 				</blockquote>
 				<blockquote>
-				服务端的应答：
-				HTTP/1.0 200 OK
-				Server: HTTPd/1.0
-				Date: Sat, 27 Nov 2004 10:19:07 GMT
-				Content-Type: text/html
-				Content-Length: 10476
-				（跟随一个空行，随后是需凭据页的HTML文本）。
+					<p>服务端的应答：</p>
+					<p>HTTP/1.0 200 OK</p>
+					<p>Server: HTTPd/1.0</p>
+					<p>Date: Sat, 27 Nov 2004 10:19:07 GMT</p>
+					<p>Content-Type: text/html</p>
+					<p>Content-Length: 10476</p>
+					<p>（跟随一个空行，随后是需凭据页的HTML文本）。</p>
+				</blockquote>
+				<p>HTTP OAuth认证</p>
+				<p>OAuth对于Http来说，就是放在Authorization header中的不是用户名密码， 而是一个token。微软的Skydrive就是使用这样的方式。</p>
+				<p>12.2、摘要认证 digest authentication（HTTP1.1提出的基本认证的替代方法）</p>
+				<p>这个认证可以看做是基本认证的增强版本，不包含密码的明文传递。</p>
+				<p>引入了一系列安全增强的选项；“保护质量”(qop)、随机数计数器由客户端增加、以及客户生成的随机数。</p>
+				<p>在HTTP摘要认证中使用 MD5 加密是为了达成"不可逆的"，也就是说，当输出已知的时候，确定原始的输入应该是相当困难的。如果密码本身太过简单，也许可以 </p>
+				<p>通过尝试所有可能的输入来找到对应的输出（穷举攻击），甚至可以通过字典或者适当的查找表加快查找速度。</p>
+				<p>示例及说明</p>
+				<p>下面的例子仅仅涵盖了“auth”保护质量的代码，因为在撰写期间，所知道的只有Opera和Konqueror网页浏览器支持“auth-int”（带完整性保护的认证）。</p>
+				<p>典型的认证过程包括如下步骤：</p>
+				<p>客户端请求一个需要认证的页面，但是不提供用户名和密码。通常这是由于用户简单的输入了一个地址或者在页面中点击了某个超链接。</p>
+				<p>服务器返回401 "Unauthorized" 响应代码，并提供认证域(realm)，以及一个随机生成的、只使用一次的数值，称为密码随机数 nonce。</p>
+				<p>此时，浏览器会向用户提示认证域(realm)（通常是所访问的计算机或系统的描述），并且提示用户名和密码。用户此时可以选择取消。</p>
+				<p>一旦提供了用户名和密码，客户端会重新发送同样的请求，但是添加了一个认证头包括了响应代码。</p>
+				<p>注意：客户端可能已经拥有了用户名和密码，因此不需要提示用户，比如以前存储在浏览器里的。</p>
+				<blockquote>
+					<p>客户端请求 (无认证)：</p>
+					<p>GET /dir/index.html HTTP/1.0</p>
+					<p>Host: localhost</p>
+					<p>(跟随一个新行，形式为一个回车再跟一个换行）</p>
 				</blockquote>
 				<blockquote>
-				HTTP OAuth认证
-				OAuth对于Http来说，就是放在Authorization header中的不是用户名密码， 而是一个token。微软的Skydrive就是使用这样的方式。
-				</blockquote>
-				HTTP OAuth认证
-				OAuth对于Http来说，就是放在Authorization header中的不是用户名密码， 而是一个token。微软的Skydrive就是使用这样的方式。
-				
-				12.2、摘要认证 digest authentication（HTTP1.1提出的基本认证的替代方法）
-
-这个认证可以看做是基本认证的增强版本，不包含密码的明文传递。
-
-引入了一系列安全增强的选项；“保护质量”(qop)、随机数计数器由客户端增加、以及客户生成的随机数。
+					<p>服务器响应：</p>
+					<p>HTTP/1.0 401 Unauthorized</p>
+					<p>Server: HTTPd/0.9</p>
+					<p>Date: Sun, 10 Apr 2005 20:26:47 GMT</p>
+					<p>WWW-Authenticate: Digest realm="testrealm@host.com",   //认证域
+					                        qop="auth,auth-int",   //保护质量
+					                        nonce="dcd98b7102dd2f0e8b11d0f600bfb0c093",  //服务器密码随机数
+					                        opaque="5ccc069c403ebaf9f0171e9517f40e41"</p>
+					<p>Content-Type: text/html</p>
+					<p>Content-Length: 311</p>
+					
+					<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+					 "http://www.w3.org/TR/1999/REC-html401-19991224/loose.dtd">
+					<HTML>
+					  <HEAD>
+					    <TITLE>Error</TITLE>
+					    <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=ISO-8859-1">
+					  </HEAD>
+					  <BODY><H1>401 Unauthorized.</H1></BODY>
+					</HTML>
+					复制代码
+					复制代码
+					客户端请求 (用户名 "Mufasa", 密码 "Circle Of Life")：
+					GET /dir/index.html HTTP/1.0
+					Host: localhost
+					Authorization: Digest username="Mufasa",
+					                     realm="testrealm@host.com",
+					                     nonce="dcd98b7102dd2f0e8b11d0f600bfb0c093",
+					                     uri="/dir/index.html",
+					                     qop=auth,
+					                     nc=00000001,    //请求计数
+					                     cnonce="0a4f113b",   //客户端密码随机数
+					                     response="6629fae49393a05397450978507c4ef1",
+					                     opaque="5ccc069c403ebaf9f0171e9517f40e41"
+					(跟随一个新行，形式如前所述)。
+					复制代码
+					复制代码
+					服务器响应：
+					HTTP/1.0 200 OK
+					Server: HTTPd/0.9
+					Date: Sun, 10 Apr 2005 20:27:03 GMT
+					Content-Type: text/html
+					Content-Length: 7984
+					(随后是一个空行，然后是所请求受限制的HTML页面)
 
 
 
