@@ -77,6 +77,7 @@ function getPage(pageNum){
                         htmls.push('<li class="catalog-item">');
                         htmls.push('<time datetime="'+o.datetime+'">'+o.datetime+'</time>');
                         htmls.push('<a href="'+o.href+'" title="'+o.text+'">'+o.text+'</a>');
+                        console.log(o.original);
                         if(!o.original){
                             htmls.push('<small class="status-tag reprint">转</small>');
                         }
