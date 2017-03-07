@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset='utf-8'>
+<meta http-equiv="X-UA-Compatible" content="chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="author" content="xyan" />
+<meta name="keywords" content="个人博客,github博客,wangming,王明" />
+<meta name="description" content="王明在github上搭建个的个人博客" />
+<title>spring boot+dubbo整合--Blog by FutureSuperstar</title>
+<link rel="shortcut icon" type="image/x-icon" href="https://futuresuperstar.github.io/images/ico/18.ico" />
+<link href='https://fonts.googleapis.com/css?family=Galdeano' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Electrolize' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Cuprum' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="../css/style.css" media="screen"/>
+<!--[if lt IE 9]>
+<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+<style type="text/css">
+.main-content p{text-indent: 2em;}
+.main-content p small{color:#888;}
+</style>
+</head>
+<body>
+<div class="container">
+    <div role="main">
+        <header>
+            <h1>双重检查</h1>
+        </header>
+        <nav>
+            <span><a title="首页"  href="https://futuresuperstar.github.io">首页</a></span> 
+            <span><a title="分类"  href="https://futuresuperstar.github.io/html/categories">分类</a></span> 
+            <span><a title="标签"  href="https://futuresuperstar.github.io/html/tags">标签</a></span> 
+            <span><a title="留言"  href="https://futuresuperstar.github.io/html/visit">留言</a></span> 
+            <span><a title="关于我" href="https://futuresuperstar.github.io/html/about">关于</a></span>
+        </nav>
+        <article class="content">
+            <section class="meta">
+                <span class="time">
+                    <time datetime="2017-01-04">2017-03-07</time>
+                </span>
+                 | 
+                <span class="categories">
+                  分类：<a href="https://futuresuperstar.github.io/html/categories/index.html#dubbo" title="dubbo">dubbo</a>&nbsp;
+                </span>
+                 | 
+                <span class="tags">
+                  标签：<a href="https://futuresuperstar.github.io/html/tags/index.html#distribute" title="分布式">分布式</a>&nbsp;
+                </span>
+            </section>
+            <section id="main-content" class="main-content">
+                <p>springboot集成dubbo是近来比较流行的一种组合，博主闲来无聊的时候也试了一下，发现整合其实还算是很容易的，但是如何更好的使用是个问题。</p>
+                <p>在分布式环境有就有生产者和消费者的区分了。我们首先设计接口，以供消费者和生产者使用。这样做有一个好处就是接口与实现隔离。</p>
+                <p>这里演示的接口包很简单，包含一个实体和一个service接口。</p>
+                <p>实体：</p>
+                <pre>
+                  <code class="java">
+  public class User implements Serializable{
+
+	private static final long serialVersionUID = 1L;
+	
+	private String name;
+	private int age;
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public int getAge() {
+		return age;
+	}
+	public void setAge(int age) {
+		this.age = age;
+	}
+
+ }
+                  </code>
+                </pre>
+                <p>接口：</p>
+                <pre>
+                  <code class="java">
+   public interface UserService {
+	
+		public User getUser();
+   }	
+                   </code>
+                </pre>
+                <p>POM：</p>
+                <pre>
+                  <code class="xml">
+  <project xmlns="http://maven.apache.org/POM/4.0.0" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	  <modelVersion>4.0.0</modelVersion>
+	  <groupId>com.xyan.dubbo</groupId>
+	  <artifactId>api</artifactId>
+	  <version>0.0.1-SNAPSHOT</version>
+	</project>
+					</code>
+                </pre>
+                <div>
+                    <ul>
+                        <li>参考文献：</li>
+                        <li>【java并发编程的艺术】[第三章：java内存模型]</li>
+                        <li><a href="http://www.ibm.com/developerworks/java/library/j-dcl/index.html">http://www.ibm.com/developerworks/java/library/j-dcl/index.html</a></li>
+                    </ul>
+                </div>
+            </section>
+            <aside id="sidebar">
+                <h2><p>个人档案</p></h2>
+                <p class="fn">姓名：王明</p>
+                <p class="nickname">网名：xyan | 淡泊</p>
+                <p>邮箱：<a style="color:#2879d0" href="mailto:wangming1255@aliyun.com">wangming1255@aliyun.com</a></p>
+                <p>QQ：1255321142</p>
+                <p class="address">现居：上海市&mdash;虹口区</p>
+                <p class="role">职业：网站设计、网站制作</p>
+            </aside>
+            <div class="clearfix"></div>
+        </article>
+    </div>
+</div>
+<section class="relative">
+    <br/>
+    <span>
+    <a  href="https://futuresuperstar.github.io/html/negativepositivelock" class="pagePre"  >上一篇：悲观锁和乐观锁</a>
+        &nbsp;&nbsp;&nbsp;
+    <a   class="pageNext disable"  >下一篇：无</a>
+    </span>
+</section>
+<!-- 多说评论框 start -->
+<div class="ds-thread"
+    data-thread-key="https://futuresuperstar.github.io/html/doublecheck"
+         data-title="双重检查--Blog by FutureSuperstar"
+    data-url="https://futuresuperstar.github.io/html/doublecheck"></div>
+<!-- 多说评论框 end -->
+<!-- 公共JS代码  -->
+<script type="text/javascript" src="../js/main.js"></script>
+<link href="https://cdn.bootcss.com/highlight.js/8.0/styles/monokai_sublime.min.css" rel="stylesheet">  
+<script src="https://cdn.bootcss.com/highlight.js/8.0/highlight.min.js"></script>  
+<script type="text/javascript">hljs.initHighlightingOnLoad();</script> 
+</body>
+</html>
