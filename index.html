@@ -37,7 +37,8 @@
 				<ul class="catalog" id="catalog">
 				</ul>
 				<div class="paginator" id="paginator">
-					<a class="current-page">1</a>
+					<a class="current-page active">1</a>
+					<a class="active">2</a>
 					<!-- <a class="active">2</a> -->
 					(共<span id="countNum">10</span>篇)
 				</div>
@@ -60,6 +61,8 @@ $(function(){
 	getPage(1);
 	$("#paginator a.active").click(function(){
 		var pageNum=$(this).text();
+		$(this).addClass("current-page");
+		$(this).siblings("a").removeClass("current-page");
 		getPage(pageNum);
 	});
 });

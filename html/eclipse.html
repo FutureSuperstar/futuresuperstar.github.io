@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset='utf-8'>
+<meta http-equiv="X-UA-Compatible" content="chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="author" content="xyan" />
+<meta name="keywords" content="个人博客,github博客,wangming,王明" />
+<meta name="description" content="王明在github上搭建个的个人博客" />
+<title>双重检查--Blog by FutureSuperstar</title>
+<link rel="shortcut icon" type="image/x-icon" href="https://futuresuperstar.github.io/images/ico/18.ico" />
+<link href='https://fonts.googleapis.com/css?family=Galdeano' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Electrolize' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Cuprum' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="../css/style.css" media="screen"/>
+<!--[if lt IE 9]>
+<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+<style type="text/css">
+.main-content p{text-indent: 2em;}
+.main-content p small{color:#888;}
+</style>
+</head>
+<body>
+<div class="container">
+    <div role="main">
+        <header>
+            <h1>双重检查</h1>
+        </header>
+        <nav>
+            <span><a title="首页"  href="https://futuresuperstar.github.io">首页</a></span> 
+            <span><a title="分类"  href="https://futuresuperstar.github.io/html/categories">分类</a></span> 
+            <span><a title="标签"  href="https://futuresuperstar.github.io/html/tags">标签</a></span> 
+            <span><a title="留言"  href="https://futuresuperstar.github.io/html/visit">留言</a></span> 
+            <span><a title="关于我" href="https://futuresuperstar.github.io/html/about">关于</a></span>
+        </nav>
+        <article class="content">
+            <section class="meta">
+                <span class="time">
+                    <time datetime="2017-01-04">2017-01-04</time>
+                </span>
+                 | 
+                <span class="categories">
+                  分类：<a href="https://futuresuperstar.github.io/html/categories/index.html#sundry" title="杂谈">sundry</a>&nbsp;
+                </span>
+                 | 
+                <span class="tags">
+                  标签：<a href="https://futuresuperstar.github.io/html/tags/index.html#doublecheck" title="双重检查">双重检查</a>&nbsp;
+                </span>
+            </section>
+            <section id="main-content" class="main-content">
+                <p>根据百度百科上说的，Eclipse 是一个开放源代码的、基于Java的可扩展开发平台。就其本身而言，它只是一个框架和一组服务，用于通过插件组件构建开发环境。幸运的是，Eclipse 附带了一个标准的插件集，包括Java开发工具（Java Development Kit，JDK）。</p>
+                <p>但是对我们大部分的开发者来说是将 Eclipse 当作 Java 集成开发环境（IDE）来使用了。本文将介绍一些eclipse的插件和快捷键使用。</p>
+                <p>一、编辑器背景</p>
+                <p><img alt="面试地点" src="https://futuresuperstar.github.io/images/153311_QIDg_2005376.png"></p>
+                <p>二、字体设置</p>
+                <p><img alt="面试地点" src="https://futuresuperstar.github.io/images/153606_4BWA_2005376.png"></p>
+                <p>三、eclipse调优</p>
+                <p>参考ini如下：<br/>
+				-startup<br/>
+				plugins/org.eclipse.equinox.launcher_1.3.100.v20150511-1540.jar<br/>
+				--launcher.library<br/>
+				plugins/org.eclipse.equinox.launcher.win32.win32.x86_64_1.1.300.v20150602-1417<br/>
+				-product<br/>
+				org.eclipse.epp.package.jee.product<br/>
+				--launcher.defaultAction<br/>
+				openFile<br/>
+				--launcher.XXMaxPermSize<br/>
+				256M<br/>
+				-showsplash<br/>
+				org.eclipse.platform<br/>
+				--launcher.XXMaxPermSize<br/>
+				256m<br/>
+				--launcher.defaultAction<br/>
+				openFile<br/>
+				--launcher.appendVmargs<br/>
+				-vmargs<br/>
+				-Dosgi.requiredJavaVersion=1.7<br/>
+				-Xms256m<br/>
+				-Xmx1024m<br/>
+				-XX:PermSize=256m<br/>
+				-XX:MaxPermSize=256m<br/>
+				-XX:+PrintGCTimeStamps<br/>
+				-XX:+PrintGCDetails<br/>
+				-verbose:gc<br/>
+				-Xloggc:gc.log<br/>
+				打印gc是为了观察gc的运行，据此优化eclipse的参数</p>
+				<p>四、文件编码</p>
+				<p>1、默认空间编码：</p>
+				<p><img alt="面试地点" src="https://futuresuperstar.github.io/images/154414_5z22_2005376.png"></p>
+				<p>2、单独的文件编码：</p>
+				<p>右键文件---->Properties</p>
+				<p><img alt="面试地点" src="https://futuresuperstar.github.io/images/154607_56qc_2005376.png"></p>
+				<p>3、新建的jsp编码：：</p>
+				<p><img alt="面试地点" src="https://futuresuperstar.github.io/images/155458_JKHo_2005376.png"></p>
+				<p>五、插件安装</p>
+				<p>1、SVN插件</p>
+				<p>分享地址：     链接: <a href="http://pan.baidu.com/s/1miyDVAw">http://pan.baidu.com/s/1miyDVAw</a> 密码: rwu8</p>
+				<p>安装方法SVN插件也很简单，插件解压后将features和plugins复制到eclipse的安装目录下，其它的不要。然后重启eclipse就可以了。</p>
+				<p>2、findbug插件</p>
+				<p> Help->InstallNew Software</p>
+				<p>然后Name输入“findBugs”，“Location”输入“http://findbugs.cs.umd.edu/eclipse”</p>
+            </section>
+            <aside id="sidebar">
+                <h2><p>个人档案</p></h2>
+                <p class="fn">姓名：王明</p>
+                <p class="nickname">网名：xyan | 淡泊</p>
+                <p>邮箱：<a style="color:#2879d0" href="mailto:wangming1255@aliyun.com">wangming1255@aliyun.com</a></p>
+                <p>QQ：1255321142</p>
+                <p class="address">现居：上海市&mdash;虹口区</p>
+                <p class="role">职业：网站设计、网站制作</p>
+            </aside>
+            <div class="clearfix"></div>
+        </article>
+    </div>
+</div>
+<section class="relative">
+    <br/>
+    <span>
+    <a  href="https://futuresuperstar.github.io/html/negativepositivelock" class="pagePre"  >上一篇：悲观锁和乐观锁</a>
+        &nbsp;&nbsp;&nbsp;
+    <a   class="pageNext disable"  >下一篇：无</a>
+    </span>
+</section>
+<!-- 多说评论框 start -->
+<div class="ds-thread"
+    data-thread-key="https://futuresuperstar.github.io/html/eclipse"
+         data-title="eclipse的使用--Blog by FutureSuperstar"
+    data-url="https://futuresuperstar.github.io/html/eclipse"></div>
+<!-- 多说评论框 end -->
+<!-- 公共JS代码  -->
+<script type="text/javascript" src="../js/main.js"></script>
+</body>
+</html>
