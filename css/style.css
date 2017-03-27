@@ -14,7 +14,7 @@ blockquote p{margin:0;padding:.5em 0;}
 .container:after,.relative:after{clear: both;display: block;height: 0;width: 0;zoom:1;overflow: hidden;}
 .content{font-size:16px;line-height:24px;}
 .content h1{padding:.5em 0;}
-.main-content img{max-width:900px;display:block;margin:4px auto;-webkit-box-shadow:#999 1px 1px 4px;-moz-box-shadow:#999 1px 1px 4px;box-shadow:#999 1px 1px 4px;}
+.main-content img{max-width:100%;display:block;margin:4px auto;-webkit-box-shadow:#999 1px 1px 4px;-moz-box-shadow:#999 1px 1px 4px;box-shadow:#999 1px 1px 4px;}
 .expression{display: inline !important;-webkit-box-shadow:none;-moz-box-shadow:none;box-shadow:none;}
 #tag_cloud{margin-bottom: 1em;}
 #tag_cloud a:hover{color:#333333 !important;text-decoration:none;}
