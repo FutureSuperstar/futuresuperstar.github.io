@@ -61,7 +61,7 @@ $(function(){
 	getPage(1);
 	$("#paginator a.active").click(function(){
 		var pageNum=$(this).text();
-		$(this).addClass("current-page");
+		$(this).addClass("current-page").removeClass("active");
 		$(this).siblings("a").removeClass("current-page");
 		getPage(pageNum);
 	});
@@ -76,7 +76,7 @@ function getPage(pageNum){
             console.log("complete:function");
             console.log(XMLHttpRequest);
             console.log(textStatus);
-        }
+        },
         success:function(data){
         	console.log("success:function");
         	console.log(data);
