@@ -40,7 +40,7 @@
 					<a class="current-page active">1</a>
 					<a class="active">2</a>
 					<!-- <a class="active">2</a> -->
-					(共<span id="countNum">10</span>篇)
+					(共<span id="countNum">11</span>篇)
 				</div>
 			</section>
 			<aside id="sidebar">
@@ -73,9 +73,6 @@ function getPage(pageNum){
         url:"https://futuresuperstar.github.io/js/"+pageNum+".json",
         dataType:"json",
         complete:function(XMLHttpRequest, textStatus){
-            console.log("complete:function");
-            console.log(XMLHttpRequest);
-            console.log(textStatus);
         },
         success:function(data){
         	console.log("success:function");
@@ -99,8 +96,6 @@ function getPage(pageNum){
             }
         },
         error:function(e){
-        	console.log("error");
-        	console.log(e);
         }
     });
 }
