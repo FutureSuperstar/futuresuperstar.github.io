@@ -91,6 +91,10 @@ function getPage(pageNum){
                 });
                 $("#catalog").empty().append(htmls.join(""));
             }
+        },
+        error:function(e){
+        	console.log(e);
+        	console.log("error");
         }
     });
 }
