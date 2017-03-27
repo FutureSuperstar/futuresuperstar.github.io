@@ -72,7 +72,13 @@ function getPage(pageNum){
         cache:true,
         url:"https://futuresuperstar.github.io/js/"+pageNum+".json",
         dataType:"json",
+        complete:function(XMLHttpRequest, textStatus){
+            console.log("complete:function");
+            console.log(XMLHttpRequest);
+            console.log(textStatus);
+        }
         success:function(data){
+        	console.log("success:function");
         	console.log(data);
             if(data!=null&&data.length>=1){
                 var htmls=[];
@@ -93,8 +99,8 @@ function getPage(pageNum){
             }
         },
         error:function(e){
-        	console.log(e);
         	console.log("error");
+        	console.log(e);
         }
     });
 }
