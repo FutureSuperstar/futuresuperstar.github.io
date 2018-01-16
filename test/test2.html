@@ -13,7 +13,7 @@
 <link href='https://fonts.googleapis.com/css?family=Electrolize' rel='stylesheet' type='text/css'>
 <link href='https://fonts.googleapis.com/css?family=Cuprum' rel='stylesheet' type='text/css'>
 <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
-<link rel="stylesheet" href="css/style.css" media="screen"/>
+<link rel="stylesheet" href="https://futuresuperstar.github.io/css/style.css" media="screen"/>
 <!--[if lt IE 9]>
 <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 <![endif]-->
@@ -49,49 +49,5 @@
 	</div>
 </div>
 <script type="text/javascript" src="https://cdn.bootcss.com/jquery/1.12.4/jquery.js"></script>
-<script type="text/javascript">
-$(function(){
-	getPage(1);
-	$("#paginator a.active").click(function(){
-		var pageNum=$(this).text();
-		$(this).addClass("current-page").removeClass("active");
-		$(this).siblings("a").removeClass("current-page");
-		getPage(pageNum);
-	});
-});
-
-function getPage(pageNum){
-	$.ajax({
-        cache:true,
-        url:"https://futuresuperstar.github.io/js/"+pageNum+".json",
-        dataType:"json",
-        complete:function(XMLHttpRequest, textStatus){
-        },
-        success:function(data){
-        	console.log("success:function");
-        	console.log(data);
-            if(data!=null&&data.length>=1){
-                var htmls=[];
-                $.each(data,function(i,o){
-                    if(!!o.datetime){//
-                        htmls.push('<li class="catalog-item">');
-                        htmls.push('<time datetime="'+o.datetime+'">'+o.datetime+'</time>');
-                        htmls.push('<a href="'+o.href+'" title="'+o.text+'">'+o.text+'</a>');
-                        if(!o.original){
-                            htmls.push('<small class="status-tag reprint">转</small>');
-                        }
-                        htmls.push('</li>');
-                    }else{
-                        htmls.push('<li class="catalog-seperator">'+o.text+'</li>');
-                    }
-                });
-                $("#catalog").empty().append(htmls.join(""));
-            }
-        },
-        error:function(e){
-        }
-    });
-}
-</script>
 </body>
 </html>
