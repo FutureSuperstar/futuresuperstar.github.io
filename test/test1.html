@@ -55,7 +55,7 @@
 <script type="text/javascript" src="https://cdn.bootcss.com/jquery/1.12.4/jquery.js"></script>
 <script type="text/javascript">
 $(function(){
-	history.pushState(stateObj, 'page 2', 'https://futuresuperstar.github.io/test/test1.html?tt='+Math.random());
+	history.pushState('', 'page 2', 'https://futuresuperstar.github.io/test/test1.html?tt='+Math.random());
 	let tt=getQueryString('tt');
 	$("#myspan").text(tt);
 });
