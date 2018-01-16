@@ -53,65 +53,19 @@
 	</div>
 </div>
 <script type="text/javascript" src="https://cdn.bootcss.com/jquery/1.12.4/jquery.js"></script>
-<script type="text/javascript">
-$(function(){
-	history.pushState('', 'page 2', 'https://futuresuperstar.github.io/test/test1.html?tt='+Math.random());
-	let tt=getQueryString('tt');
-	$("#myspan").text(tt);
-});
-
-
-function getQueryString(name) { 
-var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i"); 
-var r = window.location.search.substr(1).match(reg); 
-if (r != null) return unescape(r[2]); return null; 
+<script type="text/javascript"> 
+ $(function(){ 
+pushHistory(); 
+window.addEventListener("popstate", function(e) { 
+alert("我监听到了浏览器的返回按钮事件啦");//根据自己的需求实现自己的功能 
+}, false); 
+function pushHistory() { 
+var state = { 
+title: "title", 
+url: "#"
+}; 
+window.history.pushState(state, "title", "#"); 
 } 
-
- 
-   window.addEventListener("popstate", function(e) { 
-     window.location = 'http://www.baidu.com';
-   }, false); 
-   function pushHistory() { 
-     var state = { 
-       title: "title", 
-       url: "#"
-     }; 
-     window.history.pushState(state, "title", "#"); 
-   }
-   pushHistory();
-   /**
- * 使用 HTML5 的 History 新 API pushState 来曲线监听 Android 设备的返回按钮
- * XBack.listen(function(){
-    alert('oh! you press the back button');
-  });
- */
-;!function(pkg, undefined){
-  var STATE = 'x-back';
-  var element;
-  var onPopState = function(event){
-    event.state === STATE && fire();
-  }
-  var record = function(state){
-    history.pushState(state, null, location.href);
-  }
-  var fire = function(){
-    var event = document.createEvent('Events');
-    event.initEvent(STATE, false, false);
-    element.dispatchEvent(event);
-  }
-  var listen = function(listener){
-    element.addEventListener(STATE, listener, false);
-  }
-  ;!function(){
-    element = document.createElement('span');
-    window.addEventListener('popstate', onPopState);
-    this.listen = listen;
-    record(STATE);
-  }.call(window[pkg] = window[pkg] || {});
-}('XBack');
-
-XBack.listen(function(){
-  alert('back');
 });
 </script>
 </body>
