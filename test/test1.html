@@ -34,9 +34,9 @@
 		</nav>
 		<article class="content">
 			<section class="main-content">
-				<form action="/test/test2.html">
+				<form action="test/test2.html" id="testForm">
 					<input type="text" style="border:1px solid red">
-					<button>提交</button>
+					<button type="button" id="testBtn">提交</button>
 					<span id="myspan"></span>
 				</form>
 			</section>
@@ -55,7 +55,12 @@
 <script type="text/javascript" src="https://cdn.bootcss.com/jquery/1.12.4/jquery.js"></script>
 <script type="text/javascript"> 
  $(function(){ 
-	pushHistory(); 
+ 
+	$("#testBtn").click(function(){
+		pushHistory();
+		$("#testForm").submit();
+	});
+	 
 	
 	window.addEventListener("popstate", function(e) { 
 		alert("我监听到了浏览器的返回按钮事件啦");//根据自己的需求实现自己的功能 
@@ -68,7 +73,7 @@
 	function pushHistory() { 
 		var state = { 
 				title: "title", 
-				url: "#"
+				url: "#3423423423423"
 		}; 
 		window.history.pushState(state, "title", "#"); 
 	} 
