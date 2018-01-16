@@ -35,8 +35,9 @@
 		<article class="content">
 			<section class="main-content">
 				<form action="/test/test2.html">
-					<input type="text">
+					<input type="text" style="border:1px solid red">
 					<button>提交</button>
+					<span id="myspan"></span>
 				</form>
 			</section>
 			<aside id="sidebar">
@@ -54,8 +55,16 @@
 <script type="text/javascript" src="https://cdn.bootcss.com/jquery/1.12.4/jquery.js"></script>
 <script type="text/javascript">
 $(function(){
-	alert(1);
+	history.pushState(stateObj, 'page 2', 'https://futuresuperstar.github.io/test/test1.html?tt='+Math.random());
+	let tt=getQueryString('tt');
+	$("#myspan").text(tt);
 });
+
+function getQueryString(name) { 
+var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i"); 
+var r = window.location.search.substr(1).match(reg); 
+if (r != null) return unescape(r[2]); return null; 
+} 
 </script>
 </body>
 </html>
