@@ -67,7 +67,7 @@ var r = window.location.search.substr(1).match(reg);
 if (r != null) return unescape(r[2]); return null; 
 } 
 
-function pushHistory(); 
+ 
    window.addEventListener("popstate", function(e) { 
      window.location = 'http://www.baidu.com';
    }, false); 
@@ -78,7 +78,7 @@ function pushHistory();
      }; 
      window.history.pushState(state, "title", "#"); 
    }
-   
+   pushHistory();
    /**
  * 使用 HTML5 的 History 新 API pushState 来曲线监听 Android 设备的返回按钮
  * XBack.listen(function(){
