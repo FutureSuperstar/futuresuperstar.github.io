@@ -3,26 +3,26 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>http://192.168.1.24/blog/post/</loc>
+    <loc>https://futuresuperstar.github.io/post/</loc>
     <lastmod>2020-08-03T14:30:43+08:00</lastmod>
   </url>
   
   <url>
-    <loc>http://192.168.1.24/blog/</loc>
+    <loc>https://futuresuperstar.github.io/</loc>
     <lastmod>2020-08-03T14:30:43+08:00</lastmod>
   </url>
   
   <url>
-    <loc>http://192.168.1.24/blog/post/first/</loc>
+    <loc>https://futuresuperstar.github.io/post/first/</loc>
     <lastmod>2020-08-03T14:30:43+08:00</lastmod>
   </url>
   
   <url>
-    <loc>http://192.168.1.24/blog/categories/</loc>
+    <loc>https://futuresuperstar.github.io/categories/</loc>
   </url>
   
   <url>
-    <loc>http://192.168.1.24/blog/tags/</loc>
+    <loc>https://futuresuperstar.github.io/tags/</loc>
   </url>
   
 </urlset>
