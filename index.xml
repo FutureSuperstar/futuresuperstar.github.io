@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>我的博客</title>
+    <link>http://192.168.1.24/blog/</link>
+    <description>Recent content on 我的博客</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 03 Aug 2020 14:30:43 +0800</lastBuildDate>
+    
+	<atom:link href="http://192.168.1.24/blog/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>调度系统消息队列选型</title>
+      <link>http://192.168.1.24/blog/post/first/</link>
+      <pubDate>Mon, 03 Aug 2020 14:30:43 +0800</pubDate>
+      
+      <guid>http://192.168.1.24/blog/post/first/</guid>
+      <description>mq选择
+    Rabbitmq Kafka Rocketmq 说明     Pub/Sub ✔️ ✔️ ✔️ kafka是流式处理平台，对pub/sub订阅支持有限   优先级 NA NA 有限的支持 严格的优先级，优先级用整数表示。这样的要求对于mq会造成巨大的性能影响   顺序行 NA 分区内有序 ✔️    消息过滤&amp;ndash;broker 局部支持，message-header等 NA ✔️ 我们不需要这个功能   持久化 ✔️ ✔️ ✔️    可靠性  可以做到100% 可以做到100% Broker正常关闭 Broker异常Crash OS Crash 机器掉电，但是能立即恢复供电情况。机器无法开机（可能是cpu、主板、内存等关键设备损坏）磁盘设备损坏   延迟 Pull/push都支持  长轮询Pull方式    有且仅有一次 不保障，一般可以  大部分情况可以    回溯消费   支持按照时间回溯消费，时间维度精确到毫秒，可以向前回溯，也可以向后回溯    消息堆积       定时消息   支持定时消息，但是不支持任意时间精度，支持特定的level     </description>
+    </item>
+    
+  </channel>
+</rss>
